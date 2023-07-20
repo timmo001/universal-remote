@@ -42,7 +42,7 @@ export default async function Home() {
   return (
     <>
       <Remote />
-      <h2 className="text-2xl font-bold">Sources</h2>
+      <h2 className="mb-2 text-2xl font-bold">Sources</h2>
       <List items={sources} />
     </>
   );

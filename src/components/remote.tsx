@@ -50,14 +50,14 @@ export default function Remote() {
 
   return (
     <>
-      <section className="grid min-w-full grid-cols-1 gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
         <Button
           name="power"
           icon={<PowerIcon className="h-6 w-6 text-red-600" />}
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
           <Button
             key={number}
@@ -74,7 +74,7 @@ export default function Remote() {
         />
         <div />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
         <Button
           name="volumeUp"
           icon={<PlusIcon className="h-6 w-6" />}
@@ -149,7 +149,7 @@ export default function Remote() {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-4 justify-between gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
         <Button
           name="rewind"
           icon={<BackwardIcon className="h-6 w-6" />}
@@ -171,7 +171,7 @@ export default function Remote() {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-2 justify-between gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
         <Button
           name="stop"
           icon={<StopIcon className="h-6 w-6" />}
@@ -183,7 +183,7 @@ export default function Remote() {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-4 gap-x-2 gap-y-4">
+      <section className="grid min-w-full grid-cols-4 gap-x-1 gap-y-1">
         <Button
           name="red"
           icon={<span className="h-4 w-8 rounded-full bg-red-600" />}
