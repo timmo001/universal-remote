@@ -11,21 +11,25 @@ import List from "@/components/list";
 
 const items: Array<ListItem> = [
   {
+    key: "tv",
     name: "TV",
     url: "/tv",
     icon: <TvIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "music",
     name: "Music",
     url: "/music",
     icon: <MusicalNoteIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "lights",
     name: "Lights",
     url: "/lights",
     icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "settings",
     name: "Settings",
     url: "/settings",
     icon: <CogIcon className="h-6 w-6 text-gray-400" />,

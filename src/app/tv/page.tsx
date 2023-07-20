@@ -7,26 +7,32 @@ import Remote from "@/components/remote";
 
 const sources: Array<ListItem> = [
   {
+    key: "tv",
     name: "TV",
     icon: <TvIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "setTopBox",
     name: "Set-top Box",
     icon: <ServerIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "disneyPlus",
     name: "Disney+",
     icon: <span className="text-lg">D+</span>,
   },
   {
+    key: "netflix",
     name: "Netflix",
     icon: <span className="mr-3 text-lg">N</span>,
   },
   {
+    key: "primeVideo",
     name: "Prime Video",
     icon: <span className="mr-3 text-lg">P</span>,
   },
   {
+    key: "youtube",
     name: "YouTube",
     icon: <span className="mr-3 text-lg">Y</span>,
   },
@@ -35,7 +41,6 @@ const sources: Array<ListItem> = [
 export default async function Home() {
   return (
     <>
-      <h2 className="mt-4 text-2xl font-bold">Remote</h2>
       <Remote />
       <h2 className="text-2xl font-bold">Sources</h2>
       <List items={sources} />

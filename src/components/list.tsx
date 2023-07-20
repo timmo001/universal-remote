@@ -16,17 +16,17 @@ export default async function List({ items }: { items: Array<ListItem> }) {
   return (
     <section className="flex min-w-full flex-col items-center justify-center">
       <ul className="selectable-list flex min-w-full flex-col gap-3">
-        {items.map(({ name, url, icon }: ListItem) =>
+        {items.map(({ key, name, url, icon }: ListItem) =>
           url ? (
             <Link
-              key={name}
+              key={key}
               href={url}
               className="flex flex-row items-center gap-2">
-              <Item name={name} url={url} icon={icon} />
+              <Item key={key} name={name} url={url} icon={icon} />
             </Link>
           ) : (
-            <a key={name} className="flex flex-row items-center gap-2">
-              <Item name={name} url={url} icon={icon} />
+            <a key={key} className="flex flex-row items-center gap-2">
+              <Item key={key} name={name} url={url} icon={icon} />
             </a>
           ),
         )}
