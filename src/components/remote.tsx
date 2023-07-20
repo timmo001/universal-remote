@@ -19,6 +19,7 @@ import {
   StopIcon,
   TvIcon,
 } from "@heroicons/react/24/outline";
+import { useHomeAssistant } from "@/providers/homeAssistant";
 
 function Button({
   name,
@@ -37,8 +38,14 @@ function Button({
 }
 
 export default function Remote() {
+  const homeAssitant = useHomeAssistant();
+
   function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
     console.log("Button clicked:", event.currentTarget.name);
+    homeAssitant.client?.callService("remote", "send_command", {
+      entity_id: "remote.tv",
+      command: event.currentTarget.name,
+    });
   }
 
   return (
