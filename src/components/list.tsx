@@ -15,7 +15,7 @@ function Item({ name, icon }: ListItem) {
 export default async function List({ items }: { items: Array<ListItem> }) {
   return (
     <section className="flex min-w-full flex-col items-center justify-center">
-      <ul className="selectable-list flex min-w-full flex-col gap-3">
+      <ul className="selectable-list flex min-w-full flex-col gap-3 px-2">
         {items.map(({ key, name, url, icon }: ListItem) =>
           url ? (
             <Link

@@ -36,7 +36,7 @@ function Button({
   );
 }
 
-export default function Remote({}: {}) {
+export default function Remote() {
   function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
     console.log("Button clicked:", event.currentTarget.name);
   }
