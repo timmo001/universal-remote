@@ -21,7 +21,8 @@ export default async function List({ items }: { items: Array<ListItem> }) {
             <Link
               key={key}
               href={url}
-              className="flex flex-row items-center gap-3">
+              className="flex flex-row items-center gap-3"
+            >
               <Item key={key} name={name} url={url} icon={icon} />
             </Link>
           ) : (
