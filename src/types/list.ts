@@ -1,5 +1,5 @@
 export interface ListItem {
   name: string;
-  url: string;
+  url?: string;
   icon: JSX.Element;
 }
