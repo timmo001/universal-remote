@@ -15,7 +15,10 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import type { HomeAssistantConfig } from "@/types/homeAssistant";
-import { HOME_ASSISTANT_LOCAL_STORAGE_KEY, HomeAssistant } from "@/utils/homeAssistant";
+import {
+  HOME_ASSISTANT_LOCAL_STORAGE_KEY,
+  HomeAssistant,
+} from "@/utils/homeAssistant";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
@@ -32,12 +35,12 @@ const defaultHomeAssistantContext: HomeAssistantContextType = {
 };
 
 const HomeAssistantContext = createContext<HomeAssistantContextType>(
-  defaultHomeAssistantContext
+  defaultHomeAssistantContext,
 );
 
 let client: HomeAssistant | null = null;
 export function HomeAssistantProvider({
-  children
+  children,
 }: {
   children: ReactNode;
 }): JSX.Element {
@@ -45,7 +48,7 @@ export function HomeAssistantProvider({
   const router = useRouter();
 
   const [homeAssistant, setHomeAssistant] = useState<HomeAssistantContextType>(
-    defaultHomeAssistantContext
+    defaultHomeAssistantContext,
   );
 
   const connectedCallback = useCallback((): void => {
@@ -66,7 +69,7 @@ export function HomeAssistantProvider({
         config,
       }));
     },
-    [setHomeAssistant]
+    [setHomeAssistant],
   );
 
   const entitiesCallback = useCallback(
@@ -76,7 +79,7 @@ export function HomeAssistantProvider({
         entities,
       }));
     },
-    [setHomeAssistant]
+    [setHomeAssistant],
   );
 
   const servicesCallback = useCallback(
@@ -86,7 +89,7 @@ export function HomeAssistantProvider({
         services,
       }));
     },
-    [setHomeAssistant]
+    [setHomeAssistant],
   );
 
   useEffect(() => {
@@ -96,31 +99,30 @@ export function HomeAssistantProvider({
       connectedCallback,
       configCallback,
       entitiesCallback,
-      servicesCallback
+      servicesCallback,
     );
 
-          // Get home assistant config from database
-          try{
-            if(localStorage){
-              const config = localStorage.getItem(HOME_ASSISTANT_LOCAL_STORAGE_KEY);
-              if(config) client.config = JSON.parse(config) as HomeAssistantConfig;
-            }
-          } catch (err) {
-            console.error(err);
-          }
+    // Get home assistant config from database
+    try {
+      if (localStorage) {
+        const config = localStorage.getItem(HOME_ASSISTANT_LOCAL_STORAGE_KEY);
+        if (config) client.config = JSON.parse(config) as HomeAssistantConfig;
+      }
+    } catch (err) {
+      console.error(err);
+    }
 
-          if (!client.config) {
-            console.warn("No config found");
-            return;
-          }
+    if (!client.config) {
+      console.warn("No config found");
+      return;
+    }
 
-          if (!client.config.url) {
-            console.warn("No url found");
-            return;
-          }
+    if (!client.config.url) {
+      console.warn("No url found");
+      return;
+    }
 
     (async () => {
-
       try {
         await client.connect();
       } catch (err) {
@@ -132,12 +134,7 @@ export function HomeAssistantProvider({
       if (client) client.disconnect();
       setHomeAssistant(defaultHomeAssistantContext);
     };
-  }, [
-    configCallback,
-    connectedCallback,
-    entitiesCallback,
-    servicesCallback,
-  ]);
+  }, [configCallback, connectedCallback, entitiesCallback, servicesCallback]);
 
   return (
     <HomeAssistantContext.Provider value={homeAssistant}>

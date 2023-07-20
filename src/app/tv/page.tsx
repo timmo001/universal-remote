@@ -38,7 +38,7 @@ const sources: Array<ListItem> = [
   },
 ];
 
-export default async function Home() {
+export default async function TV() {
   return (
     <>
       <Remote />
