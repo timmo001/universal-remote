@@ -1,5 +1,4 @@
 "use server";
-import Link from "next/link";
 import {
   LightBulbIcon,
   CogIcon,
@@ -8,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import type { ListItem } from "@/types/list";
+import List from "@/components/list";
 
 const items: Array<ListItem> = [
   {
@@ -33,21 +33,5 @@ const items: Array<ListItem> = [
 ];
 
 export default async function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <section className="flex min-w-full flex-col items-center justify-center">
-        <ul className="selectable-list flex flex-col gap-3">
-          {items.map(({ name, url, icon }: ListItem) => (
-            <Link
-              key={url}
-              href={url}
-              className="flex flex-row items-center gap-2">
-              {icon}
-              <span>{name}</span>
-            </Link>
-          ))}
-        </ul>
-      </section>
-    </main>
-  );
+  return <List items={items} />;
 }
