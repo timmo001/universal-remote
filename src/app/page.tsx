@@ -39,7 +39,7 @@ const items: Array<ListItem> = [
 export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <section className="flex flex-col items-center justify-center min-w-full">
+      <section className="flex min-w-full flex-col items-center justify-center">
         <ul className="selectable-list flex flex-col gap-3">
           {items.map(({ name, url, icon }: ListItem) => (
             <Link
