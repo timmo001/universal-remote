@@ -14,11 +14,9 @@ import {
 } from "home-assistant-js-websocket";
 import { usePathname, useRouter } from "next/navigation";
 
-import type { HomeAssistantConfig } from "@/types/homeAssistant";
-import {
-  HOME_ASSISTANT_LOCAL_STORAGE_KEY,
-  HomeAssistant,
-} from "@/utils/homeAssistant";
+import type { Settings } from "@/types/settings";
+import { HomeAssistant } from "@/utils/homeAssistant";
+import { getSettings } from "@/utils/settings";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
@@ -105,8 +103,8 @@ export function HomeAssistantProvider({
     // Get home assistant config from database
     try {
       if (localStorage) {
-        const config = localStorage.getItem(HOME_ASSISTANT_LOCAL_STORAGE_KEY);
-        if (config) client.config = JSON.parse(config) as HomeAssistantConfig;
+        const settings: Settings = getSettings();
+        if (settings) client.config = settings.homeAssistant;
       }
     } catch (err) {
       console.error(err);

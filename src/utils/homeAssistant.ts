@@ -19,9 +19,8 @@ import {
   subscribeServices,
 } from "home-assistant-js-websocket";
 
-import type { HomeAssistantConfig } from "@/types/homeAssistant";
+import type { HomeAssistantConfig } from "@/types/settings";
 
-export const HOME_ASSISTANT_LOCAL_STORAGE_KEY = "homeAssistantConfig";
 export const UNAVAILABLE = "unavailable";
 export const UNKNOWN = "unknown";
 export const ON = "on";
@@ -87,13 +86,16 @@ async function saveTokens(data: AuthData | null): Promise<void> {
   if (!localStorage) return;
 
   localStorage.setItem(
-    HOME_ASSISTANT_LOCAL_STORAGE_KEY,
+    "settings",
     JSON.stringify({
-      accessToken: data?.access_token,
-      refreshToken: data?.refresh_token,
-      clientId: data?.clientId,
-      expires: data?.expires,
-      expiresIn: data?.expires_in,
+      homeAssistant: {
+        accessToken: data?.access_token,
+        refreshToken: data?.refresh_token,
+        clientId: data?.clientId,
+        expires: data?.expires,
+        expiresIn: data?.expires_in,
+        url: data?.hassUrl,
+      },
     }),
   );
 }
