@@ -33,5 +33,9 @@ const items: Array<ListItem> = [
 ];
 
 export default async function Home() {
-  return <List items={items} />;
+  return (
+    <>
+      <List items={items} />
+    </>
+  );
 }
