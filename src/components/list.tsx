@@ -21,11 +21,11 @@ export default async function List({ items }: { items: Array<ListItem> }) {
             <Link
               key={key}
               href={url}
-              className="flex flex-row items-center gap-2">
+              className="flex flex-row items-center gap-3">
               <Item key={key} name={name} url={url} icon={icon} />
             </Link>
           ) : (
-            <a key={key} className="flex flex-row items-center gap-2">
+            <a key={key} className="flex flex-row items-center gap-3">
               <Item key={key} name={name} url={url} icon={icon} />
             </a>
           ),
