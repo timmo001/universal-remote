@@ -7,11 +7,7 @@ import {
   TvIcon,
 } from "@heroicons/react/24/outline";
 
-interface ListItem {
-  name: string;
-  url: string;
-  icon: JSX.Element;
-}
+import type { ListItem } from "@/types/list";
 
 const items: Array<ListItem> = [
   {
