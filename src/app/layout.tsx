@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "./globals.css";
+import "@/app/globals.css";
 import { HomeAssistantProvider } from "@/providers/homeAssistant";
+import { SettingsProvider } from "@/providers/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <HomeAssistantProvider>
-          <main className="mx-auto flex min-h-screen max-w-xs flex-col items-baseline justify-start gap-2 p-8">
-            {children}
-          </main>
-        </HomeAssistantProvider>
+        <SettingsProvider>
+          <HomeAssistantProvider>
+            <main className="mx-auto flex min-h-screen max-w-xs flex-col items-baseline justify-start gap-2 p-8">
+              {children}
+            </main>
+          </HomeAssistantProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

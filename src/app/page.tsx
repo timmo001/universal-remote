@@ -29,9 +29,9 @@ const items: Array<ListItem> = [
     icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
   },
   {
-    key: "settings",
-    name: "Settings",
-    url: "/settings",
+    key: "setup",
+    name: "Setup",
+    url: "/setup",
     icon: <CogIcon className="h-6 w-6 text-gray-400" />,
   },
 ];

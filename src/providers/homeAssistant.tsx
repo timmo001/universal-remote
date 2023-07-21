@@ -14,9 +14,8 @@ import {
 } from "home-assistant-js-websocket";
 import { usePathname, useRouter } from "next/navigation";
 
-import type { Settings } from "@/types/settings";
 import { HomeAssistant } from "@/utils/homeAssistant";
-import { getSettings } from "@/utils/settings";
+import { useSettings } from "@/providers/settings";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
@@ -44,6 +43,7 @@ export function HomeAssistantProvider({
 }): JSX.Element {
   const pathname = usePathname();
   const router = useRouter();
+  const { settings, updateSettings } = useSettings();
 
   const [homeAssistant, setHomeAssistant] = useState<HomeAssistantContextType>(
     defaultHomeAssistantContext,
@@ -100,15 +100,8 @@ export function HomeAssistantProvider({
       servicesCallback,
     );
 
-    // Get home assistant config from database
-    try {
-      if (localStorage) {
-        const settings: Settings = getSettings();
-        if (settings) client.config = settings.homeAssistant;
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    // Get home assistant config
+    if (settings) client.config = settings.homeAssistant;
 
     if (!client.config) {
       console.warn("No config found");
@@ -132,7 +125,13 @@ export function HomeAssistantProvider({
       if (client) client.disconnect();
       setHomeAssistant(defaultHomeAssistantContext);
     };
-  }, [configCallback, connectedCallback, entitiesCallback, servicesCallback]);
+  }, [
+    configCallback,
+    connectedCallback,
+    entitiesCallback,
+    servicesCallback,
+    settings,
+  ]);
 
   return (
     <HomeAssistantContext.Provider value={homeAssistant}>

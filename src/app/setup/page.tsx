@@ -2,34 +2,37 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { HomeIcon } from "@heroicons/react/24/outline";
 
-import type { Settings } from "@/types/settings";
-import { getSettings } from "@/utils/settings";
+import { useSettings } from "@/providers/settings";
+import { useRouter } from "next/navigation";
 
-let timeout: NodeJS.Timeout | undefined;
-export default function Settings() {
+export default function Setup() {
   const [homeAssistantUrl, setHomeAssistantUrl] = useState<string>("");
+  const { settings, updateSettings } = useSettings();
+  const router = useRouter();
 
   useEffect(() => {
-    const settings: Settings = getSettings();
-    console.log("Settings:", settings);
-    setHomeAssistantUrl(settings.homeAssistant?.url || "");
-  }, []);
+    setHomeAssistantUrl(settings?.homeAssistant?.url || "");
+  }, [settings?.homeAssistant?.url]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     setHomeAssistantUrl(event.target.value);
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      let settings: Settings = getSettings() || { homeAssistant: {} };
-      console.log("Current settings:", settings);
-      settings.homeAssistant.url = event.target.value;
-      localStorage.setItem("settings", JSON.stringify(settings));
-      console.log("Saved settings:", settings);
-    }, 500);
+  }
+
+  function handleSetup(): void {
+    if (!settings) return;
+    console.log("Current settings:", settings);
+    settings.homeAssistant.url = homeAssistantUrl;
+    updateSettings(settings);
+    // console.log("Saved settings:", settings);
+    router.push("/");
+    router.refresh();
   }
 
   return (
     <>
-      <h2 className="mb-2 text-2xl font-bold">Settings</h2>
+      <h2 className="mb-2 text-2xl font-bold">
+        Please enter Home Assistant url
+      </h2>
       <form>
         <label className="block">
           <span className="flex flex-row items-center gap-3">
@@ -49,6 +52,12 @@ export default function Settings() {
           />
         </label>
       </form>
+      <button
+        className="mt-2 rounded-md border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+        onClick={() => handleSetup()}
+      >
+        Save and Login
+      </button>
     </>
   );
 }
