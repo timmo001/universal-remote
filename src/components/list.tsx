@@ -1,4 +1,4 @@
-"use server";
+"use client";
 import Link from "next/link";
 
 import type { ListItem } from "@/types/list";
@@ -12,7 +12,7 @@ function Item({ name, icon }: ListItem) {
   );
 }
 
-export default async function List({ items }: { items: Array<ListItem> }) {
+export default function List({ items }: { items: Array<ListItem> }) {
   return (
     <section className="flex min-w-full flex-col items-center justify-center">
       <ul className="selectable-list flex min-w-full flex-col gap-3 px-2">
