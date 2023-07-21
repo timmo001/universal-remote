@@ -16,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { HomeAssistant } from "@/utils/homeAssistant";
 import { useSettings } from "@/providers/settings";
+import { HomeAssistantConfig } from "@/types/settings";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
@@ -90,6 +91,21 @@ export function HomeAssistantProvider({
     [setHomeAssistant],
   );
 
+  const saveConfigCallback = useCallback(
+    (config: HomeAssistantConfig): void => {
+      if (!localStorage) return;
+
+      localStorage.setItem(
+        "settings",
+        JSON.stringify({
+          ...settings,
+          homeAssistant: config,
+        }),
+      );
+    },
+    [settings],
+  );
+
   useEffect(() => {
     console.log("Connecting to Home Assistant..");
 
@@ -98,6 +114,7 @@ export function HomeAssistantProvider({
       configCallback,
       entitiesCallback,
       servicesCallback,
+      saveConfigCallback,
     );
 
     // Get home assistant config
@@ -130,6 +147,7 @@ export function HomeAssistantProvider({
     connectedCallback,
     entitiesCallback,
     servicesCallback,
+    saveConfigCallback,
     settings,
   ]);
 

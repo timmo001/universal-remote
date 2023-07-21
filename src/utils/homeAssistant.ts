@@ -80,26 +80,6 @@ async function loadTokens(
   };
 }
 
-async function saveTokens(data: AuthData | null): Promise<void> {
-  console.log("Save Home Assistant tokens:", data);
-
-  if (!localStorage) return;
-
-  localStorage.setItem(
-    "settings",
-    JSON.stringify({
-      homeAssistant: {
-        accessToken: data?.access_token,
-        refreshToken: data?.refresh_token,
-        clientId: data?.clientId,
-        expires: data?.expires,
-        expiresIn: data?.expires_in,
-        url: data?.hassUrl,
-      },
-    }),
-  );
-}
-
 export class HomeAssistant {
   public config: HomeAssistantConfig | null = null;
   public connection: Connection | null = null;
@@ -113,12 +93,14 @@ export class HomeAssistant {
   private connectedCallback: () => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
+  private saveConfigCallback: (data: HomeAssistantConfig) => void;
 
   constructor(
     connectedCallback?: () => void,
     configCallback?: (config: HassConfig) => void,
     entitiesCallback?: (entities: HassEntities) => void,
     servicesCallback?: (services: HassServices) => void,
+    saveConfigCallback?: (data: HomeAssistantConfig) => void,
     connection?: Connection,
     config?: HomeAssistantConfig,
   ) {
@@ -126,6 +108,7 @@ export class HomeAssistant {
     this.configCallback = configCallback || (() => {});
     this.entitiesCallback = entitiesCallback || (() => {});
     this.servicesCallback = servicesCallback || (() => {});
+    this.saveConfigCallback = saveConfigCallback || (() => {});
     this.connection = connection || null;
     this.config = config || null;
   }
@@ -174,7 +157,7 @@ export class HomeAssistant {
           }
           return await loadTokens(this.config);
         },
-        saveTokens,
+        saveTokens: this.saveTokens,
       });
 
       // Connect to Home Assistant
@@ -184,7 +167,7 @@ export class HomeAssistant {
       if (err !== ERR_HASS_HOST_REQUIRED && err !== ERR_INVALID_AUTH) throw err;
 
       // Clear stored tokens
-      await saveTokens(null);
+      await this.saveTokens(null);
 
       if (err === ERR_HASS_HOST_REQUIRED)
         throw new Error("No Home Assistant URL provided");
@@ -245,5 +228,18 @@ export class HomeAssistant {
         entity_id: entity.entity_id,
       },
     );
+  }
+
+  async saveTokens(data: AuthData | null): Promise<void> {
+    console.log("Save Home Assistant tokens:", data);
+
+    this.saveConfigCallback({
+      accessToken: data?.access_token,
+      refreshToken: data?.refresh_token,
+      clientId: data?.clientId || undefined,
+      expires: data?.expires,
+      expiresIn: data?.expires_in,
+      url: data?.hassUrl,
+    });
   }
 }
