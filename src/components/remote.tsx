@@ -20,6 +20,7 @@ import {
   TvIcon,
 } from "@heroicons/react/24/outline";
 import { useHomeAssistant } from "@/providers/homeAssistant";
+import { useSettings } from "@/providers/settings";
 
 function Button({
   name,
@@ -38,15 +39,27 @@ function Button({
 }
 
 export default function Remote() {
+  const { settings } = useSettings();
   const homeAssitant = useHomeAssistant();
 
   function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
     console.log("Button clicked:", event.currentTarget.name);
-    homeAssitant.client?.callService("remote", "send_command", {
-      entity_id: "remote.tv",
+    if (!settings || !settings.tv || !settings.tv.entities) {
+      console.error("No TV defined");
+      return;
+    }
+    if (!homeAssitant.client) {
+      console.error("No Home Assistant client");
+      return;
+    }
+    homeAssitant.client.callService("remote", "send_command", {
+      entity_id: settings.tv.entities[0],
       command: event.currentTarget.name,
     });
   }
+
+  if (!settings || !settings.tv || !settings.tv.entities)
+    return <h2 className="mb-2 text-2xl font-bold">No TV defined</h2>;
 
   return (
     <>
