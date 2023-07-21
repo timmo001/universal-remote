@@ -9,7 +9,12 @@ import {
 
 import type { Settings } from "@/types/settings";
 
-export const defaultSettings: Settings = { homeAssistant: {} };
+export const defaultSettings: Settings = {
+  homeAssistant: {},
+  tv: { entities: [] },
+  music: { entities: [] },
+  lights: { entities: [] },
+};
 
 function getSettings(): Settings {
   try {
