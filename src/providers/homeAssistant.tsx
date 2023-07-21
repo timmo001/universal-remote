@@ -44,7 +44,7 @@ export function HomeAssistantProvider({
 }): JSX.Element {
   const pathname = usePathname();
   const router = useRouter();
-  const { settings, updateSettings } = useSettings();
+  const { settings } = useSettings();
 
   const [homeAssistant, setHomeAssistant] = useState<HomeAssistantContextType>(
     defaultHomeAssistantContext,
@@ -127,6 +127,7 @@ export function HomeAssistantProvider({
 
     if (!client.config.url) {
       console.warn("No url found");
+      if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
@@ -146,8 +147,10 @@ export function HomeAssistantProvider({
     configCallback,
     connectedCallback,
     entitiesCallback,
-    servicesCallback,
+    pathname,
+    router,
     saveConfigCallback,
+    servicesCallback,
     settings,
   ]);
 

@@ -89,26 +89,26 @@ export class HomeAssistant {
   public haUser: HassUser | null = null;
 
   private auth: Auth | null = null;
-  private configCallback: (config: HassConfig) => void;
   private connectedCallback: () => void;
+  private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
-  private saveConfigCallback: (data: HomeAssistantConfig) => void;
+  private saveConfigCallback: (config: HomeAssistantConfig) => void;
 
   constructor(
-    connectedCallback?: () => void,
-    configCallback?: (config: HassConfig) => void,
-    entitiesCallback?: (entities: HassEntities) => void,
-    servicesCallback?: (services: HassServices) => void,
-    saveConfigCallback?: (data: HomeAssistantConfig) => void,
+    connectedCallback: () => void,
+    configCallback: (config: HassConfig) => void,
+    entitiesCallback: (entities: HassEntities) => void,
+    servicesCallback: (services: HassServices) => void,
+    saveConfigCallback: (config: HomeAssistantConfig) => void,
     connection?: Connection,
     config?: HomeAssistantConfig,
   ) {
-    this.connectedCallback = connectedCallback || (() => {});
-    this.configCallback = configCallback || (() => {});
-    this.entitiesCallback = entitiesCallback || (() => {});
-    this.servicesCallback = servicesCallback || (() => {});
-    this.saveConfigCallback = saveConfigCallback || (() => {});
+    this.connectedCallback = connectedCallback;
+    this.configCallback = configCallback;
+    this.entitiesCallback = entitiesCallback;
+    this.servicesCallback = servicesCallback;
+    this.saveConfigCallback = saveConfigCallback;
     this.connection = connection || null;
     this.config = config || null;
   }
@@ -148,6 +148,7 @@ export class HomeAssistant {
 
     try {
       // Create auth object
+      console.log("Home Assistant: getAuth");
       this.auth = await getAuth({
         hassUrl: this.config.url,
         loadTokens: async (): Promise<AuthData | null | undefined> => {
@@ -161,12 +162,14 @@ export class HomeAssistant {
       });
 
       // Connect to Home Assistant
+      console.log("Home Assistant: createConnection");
       this.connection = await createConnection({ auth: this.auth });
     } catch (err) {
       console.warn("Failed to connect to Home Assistant:", err);
       if (err !== ERR_HASS_HOST_REQUIRED && err !== ERR_INVALID_AUTH) throw err;
 
       // Clear stored tokens
+      console.log("Home Assistant: saveTokens(null)");
       await this.saveTokens(null);
 
       if (err === ERR_HASS_HOST_REQUIRED)
@@ -231,7 +234,7 @@ export class HomeAssistant {
   }
 
   async saveTokens(data: AuthData | null): Promise<void> {
-    console.log("Save Home Assistant tokens:", data);
+    console.log("Home Assistant: saveTokens:", data);
 
     this.saveConfigCallback({
       accessToken: data?.access_token,
