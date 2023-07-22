@@ -1,14 +1,10 @@
 "use client";
 import {
   Auth,
-  AuthData,
   callService,
   Connection,
   createConnection,
   createLongLivedTokenAuth,
-  ERR_HASS_HOST_REQUIRED,
-  ERR_INVALID_AUTH,
-  getAuth,
   getUser,
   HassConfig,
   HassEntities,
@@ -61,19 +57,21 @@ export class HomeAssistant {
   private config: HomeAssistantConfig | null = null;
   private connection: Connection | null = null;
   private haServices: HassServices | null = null;
-  private connectedCallback: (user: HassUser) => void;
+  private connectedCallback: (connection: Connection, user: HassUser) => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
 
   constructor(
-    connectedCallback: (user: HassUser) => void,
+    connectedCallback: (connection: Connection, user: HassUser) => void,
     configCallback: (config: HassConfig) => void,
     entitiesCallback: (entities: HassEntities) => void,
     servicesCallback: (services: HassServices) => void,
     config?: HomeAssistantConfig,
     connection?: Connection,
   ) {
+    console.log("Home Assistant: create new client");
+
     this.connectedCallback = connectedCallback;
     this.configCallback = configCallback;
     this.entitiesCallback = entitiesCallback;
@@ -86,7 +84,10 @@ export class HomeAssistant {
     return this.config?.url || null;
   }
 
-  public connected: boolean = this.connection !== null;
+  public get connected(): boolean {
+    console.log("Home Assistant: connected:", this.connection !== null);
+    return this.connection !== null;
+  }
 
   async callService(
     domain: string,
@@ -111,9 +112,6 @@ export class HomeAssistant {
 
   async connect(): Promise<void> {
     if (this.connection) return;
-
-    console.log("Connecting to Home Assistant:", this.config);
-
     if (!this.config?.url) throw new Error("Missing Home Assistant URL");
     if (!this.config?.accessToken)
       throw new Error("Missing Home Assistant access token");
@@ -139,7 +137,6 @@ export class HomeAssistant {
     });
 
     subscribeConfig(this.connection, (config: HassConfig) => {
-      console.log("Home Assistant config updated");
       this.configCallback(config);
     });
 
@@ -153,8 +150,7 @@ export class HomeAssistant {
     });
 
     getUser(this.connection).then((user: HassUser) => {
-      console.log("Logged into Home Assistant as", user.name);
-      this.connectedCallback(user);
+      this.connectedCallback(this.connection!, user);
     });
   }
 

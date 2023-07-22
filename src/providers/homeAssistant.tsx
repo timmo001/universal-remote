@@ -5,9 +5,11 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
+  Connection,
   HassConfig,
   HassEntities,
   HassServices,
@@ -17,27 +19,29 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { HomeAssistant } from "@/utils/homeAssistant";
 import { useSettings } from "@/providers/settings";
-import { HomeAssistantConfig } from "@/types/settings";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
   config: HassConfig | null;
+  connection: Connection | null;
   entities: HassEntities | null;
   services: HassServices | null;
+  user: HassUser | null;
 };
 
 const defaultHomeAssistantContext: HomeAssistantContextType = {
   client: null,
   config: null,
+  connection: null,
   entities: null,
   services: null,
+  user: null,
 };
 
 const HomeAssistantContext = createContext<HomeAssistantContextType>(
   defaultHomeAssistantContext,
 );
 
-let client: HomeAssistant | null = null;
 export function HomeAssistantProvider({
   children,
 }: {
@@ -52,11 +56,12 @@ export function HomeAssistantProvider({
   );
 
   const connectedCallback = useCallback(
-    (user: HassUser): void => {
+    (connection: Connection, user: HassUser): void => {
       console.log("Connected to Home Assistant:", user);
       setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
         ...prevHomeAssistant,
-        client,
+        connection,
+        user,
       }));
 
       // Cleanup search params
@@ -96,49 +101,54 @@ export function HomeAssistantProvider({
   );
 
   useEffect(() => {
-    if (!settings) return;
-    console.log("Setup Home Assistant..");
+    if (!settings?.homeAssistant) return;
 
     if (!settings.homeAssistant?.url) {
-      console.warn("No url found");
+      console.warn("Home Assistant: No url found");
       if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
     if (!settings.homeAssistant?.accessToken) {
-      console.warn("No access token found");
+      console.warn("Home Assistant: No access token found");
       if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
-    client = new HomeAssistant(
-      connectedCallback,
-      configCallback,
-      entitiesCallback,
-      servicesCallback,
-      settings.homeAssistant,
-    );
+    const client =
+      homeAssistant.client ||
+      new HomeAssistant(
+        connectedCallback,
+        configCallback,
+        entitiesCallback,
+        servicesCallback,
+        settings.homeAssistant,
+      );
 
-    (async () => {
-      try {
-        await client.connect();
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-
-    return () => {
-      if (client) client.disconnect();
-      setHomeAssistant(defaultHomeAssistantContext);
-    };
+    if (!client.connected) {
+      client
+        .connect()
+        .then(() => {
+          // if (!homeAssistant.client) {
+          setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+            ...prevHomeAssistant,
+            client,
+          }));
+          // }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }, [
     configCallback,
     connectedCallback,
     entitiesCallback,
+    homeAssistant.client,
     pathname,
     router,
     servicesCallback,
-    settings,
+    settings?.homeAssistant,
   ]);
 
   return (

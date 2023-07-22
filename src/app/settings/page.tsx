@@ -16,6 +16,7 @@ export default function Settings() {
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     if (!settings) return;
     const nameSplit = event.target.name.split(".");
+    console.log("Settings: update:", nameSplit, event.target.value);
     updateSettings({
       ...settings,
       [nameSplit[0]]: {
