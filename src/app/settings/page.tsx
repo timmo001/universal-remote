@@ -21,7 +21,7 @@ export default function Settings() {
       ...settings,
       [nameSplit[0]]: {
         ...settings[nameSplit[0] as keyof typeof settings],
-        [nameSplit[1]]: event.target.value.split(","),
+        [nameSplit[1]]: event.target.value,
       },
     });
   }
@@ -30,7 +30,11 @@ export default function Settings() {
     <>
       <form className="flex w-full flex-col gap-4">
         <Link href="/setup">
-          <button className="mb-2 w-full rounded-md border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2">
+          <button
+            className="mb-2 w-full rounded-md border border-transparent bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+            autoFocus={false}
+            tabIndex={-1}
+          >
             Update Home Assistant Configuration
           </button>
         </Link>
@@ -38,7 +42,7 @@ export default function Settings() {
           name="tv.entities"
           label="TV Entities"
           icon={<TvIcon className="h-6 w-6 text-gray-200" />}
-          filters={["media_player"]}
+          filters={["remote"]}
           value={settings?.tv?.entities || []}
           handleChange={handleChange}
         />
