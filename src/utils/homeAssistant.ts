@@ -5,6 +5,7 @@ import {
   callService,
   Connection,
   createConnection,
+  createLongLivedTokenAuth,
   ERR_HASS_HOST_REQUIRED,
   ERR_INVALID_AUTH,
   getAuth,
@@ -142,43 +143,23 @@ export class HomeAssistant {
 
   async connect(): Promise<void> {
     if (this.connection) return;
-    if (!this.config) throw new Error("Config not loaded");
 
     console.log("Connecting to Home Assistant:", this.config);
 
-    try {
-      // Create auth object
-      console.log("Home Assistant: getAuth");
-      this.auth = await getAuth({
-        hassUrl: this.config.url,
-        loadTokens: async (): Promise<AuthData | null | undefined> => {
-          if (!this.config) {
-            console.error("loadTokens - Config not loaded");
-            return undefined;
-          }
-          return await loadTokens(this.config);
-        },
-        saveTokens: this.saveTokens,
-      });
+    if (!this.config?.url) throw new Error("Missing Home Assistant URL");
+    if (!this.config?.accessToken)
+      throw new Error("Missing Home Assistant access token");
 
-      // Connect to Home Assistant
-      console.log("Home Assistant: createConnection");
-      this.connection = await createConnection({ auth: this.auth });
-    } catch (err) {
-      console.warn("Failed to connect to Home Assistant:", err);
-      if (err !== ERR_HASS_HOST_REQUIRED && err !== ERR_INVALID_AUTH) throw err;
+    // Create auth object
+    console.log("Home Assistant: createLongLivedTokenAuth");
+    this.auth = createLongLivedTokenAuth(
+      this.config.url,
+      this.config.accessToken,
+    );
 
-      // Clear stored tokens
-      console.log("Home Assistant: saveTokens(null)");
-      await this.saveTokens(null);
-
-      if (err === ERR_HASS_HOST_REQUIRED)
-        throw new Error("No Home Assistant URL provided");
-
-      console.warn("Invalid Home Assistant credentials");
-      this.auth = await getAuth({ hassUrl: this.config.url });
-      return;
-    }
+    // Connect to Home Assistant
+    console.log("Home Assistant: createConnection");
+    this.connection = await createConnection({ auth: this.auth });
 
     this.connection.addEventListener("ready", () => {
       console.log("Home Assistant connection ready");

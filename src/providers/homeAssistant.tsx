@@ -107,7 +107,7 @@ export function HomeAssistantProvider({
   );
 
   useEffect(() => {
-    console.log("Connecting to Home Assistant..");
+    console.log("Setup Home Assistant..");
 
     client = new HomeAssistant(
       connectedCallback,
@@ -117,17 +117,21 @@ export function HomeAssistantProvider({
       saveConfigCallback,
     );
 
-    // Get home assistant config
-    if (settings) client.config = settings.homeAssistant;
-
-    if (!client.config) {
-      console.warn("No config found");
+    if (!settings?.homeAssistant?.url) {
+      console.warn("No url found");
+      if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
-    if (!client.config.url) {
-      console.warn("No url found");
+    if (!settings?.homeAssistant?.accessToken) {
+      console.warn("No access token found");
       if (pathname !== "/setup") router.push("/setup");
+      return;
+    }
+
+    client.config = settings.homeAssistant;
+    if (!client.config) {
+      console.warn("No config found");
       return;
     }
 
