@@ -14,8 +14,10 @@ export default function Setup() {
   const router = useRouter();
 
   useEffect(() => {
+    if (homeAssistantAccessToken || homeAssistantUrl) return;
     setHomeAssistantUrl(settings?.homeAssistant?.url || "");
-  }, [settings?.homeAssistant?.url]);
+    setHomeAssistantAccessToken(settings?.homeAssistant?.accessToken || "");
+  }, [homeAssistantAccessToken, homeAssistantUrl, settings?.homeAssistant]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     if (event.target.name === "homeAssistant.accessToken")
