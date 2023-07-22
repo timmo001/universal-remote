@@ -137,7 +137,6 @@ export function HomeAssistantProvider({
     entitiesCallback,
     pathname,
     router,
-    saveConfigCallback,
     servicesCallback,
     settings,
   ]);
