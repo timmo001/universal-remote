@@ -27,8 +27,10 @@ export default function InputEntities({
       console.log("No Home Assistant entities.");
       return [];
     }
-    return Object.values(homeAssistant.entities);
-  }, [homeAssistant.entities]);
+    return Object.values(homeAssistant.entities).filter((entity: HassEntity) =>
+      filters ? filters.includes(entity.entity_id.split(".")[0]) : true,
+    );
+  }, [filters, homeAssistant.entities]);
 
   return (
     <label className="block w-full">
