@@ -19,8 +19,9 @@ import {
   StopIcon,
   TvIcon,
 } from "@heroicons/react/24/outline";
-import { useHomeAssistant } from "@/providers/homeAssistant";
+
 import { useSettings } from "@/providers/settings";
+import { useHomeAssistant } from "@/providers/homeAssistant";
 
 function Button({
   name,

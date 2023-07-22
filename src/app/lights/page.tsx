@@ -25,6 +25,16 @@ export default function Lights() {
     setItems(newItems);
   }, [settings, homeAssistant.entities]);
 
+  if (!settings?.lights?.entities || settings.lights.entities.length < 1)
+    return (
+      <>
+        <h2 className="mb-2 text-2xl font-bold">No lights defined</h2>
+        <p>
+          Please add an entity in <a href="/settings">settings</a>.
+        </p>
+      </>
+    );
+
   return (
     <>
       <List items={items} />

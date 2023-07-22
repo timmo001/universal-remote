@@ -4,6 +4,7 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
+  --foreground-rgb-dimmed: 40, 40, 40;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
@@ -11,6 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
+    --foreground-rgb-dimmed: 210, 210, 210;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
@@ -26,7 +28,13 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+ul > a,
+button {
+  color: rgb(var(--foreground-rgb));
+}
+
 a {
+  color: rgb(var(--foreground-rgb-dimmed));
   transition: all 0.2s ease-in-out;
 }
 
