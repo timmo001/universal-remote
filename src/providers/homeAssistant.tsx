@@ -91,21 +91,6 @@ export function HomeAssistantProvider({
     [setHomeAssistant],
   );
 
-  const saveConfigCallback = useCallback(
-    (config: HomeAssistantConfig): void => {
-      if (!localStorage) return;
-
-      localStorage.setItem(
-        "settings",
-        JSON.stringify({
-          ...settings,
-          homeAssistant: config,
-        }),
-      );
-    },
-    [settings],
-  );
-
   useEffect(() => {
     console.log("Setup Home Assistant..");
 
@@ -114,7 +99,6 @@ export function HomeAssistantProvider({
       configCallback,
       entitiesCallback,
       servicesCallback,
-      saveConfigCallback,
     );
 
     if (!settings?.homeAssistant?.url) {

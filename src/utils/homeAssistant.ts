@@ -56,31 +56,6 @@ export function entitySupportsFeature(
   return (entity.attributes?.supported_features! & feature) !== 0;
 }
 
-async function loadTokens(
-  config: HomeAssistantConfig,
-): Promise<AuthData | null> {
-  console.log("Load Home Assistant tokens:", config);
-
-  if (
-    !config.accessToken ||
-    !config.refreshToken ||
-    !config.clientId ||
-    !config.expires ||
-    !config.expiresIn ||
-    !config.url
-  )
-    return null;
-
-  return {
-    access_token: config.accessToken,
-    refresh_token: config.refreshToken,
-    clientId: config.clientId,
-    expires: Number(config.expires),
-    expires_in: config.expiresIn,
-    hassUrl: config.url,
-  };
-}
-
 export class HomeAssistant {
   public config: HomeAssistantConfig | null = null;
   public connection: Connection | null = null;
@@ -94,14 +69,12 @@ export class HomeAssistant {
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
-  private saveConfigCallback: (config: HomeAssistantConfig) => void;
 
   constructor(
     connectedCallback: () => void,
     configCallback: (config: HassConfig) => void,
     entitiesCallback: (entities: HassEntities) => void,
     servicesCallback: (services: HassServices) => void,
-    saveConfigCallback: (config: HomeAssistantConfig) => void,
     connection?: Connection,
     config?: HomeAssistantConfig,
   ) {
@@ -109,7 +82,6 @@ export class HomeAssistant {
     this.configCallback = configCallback;
     this.entitiesCallback = entitiesCallback;
     this.servicesCallback = servicesCallback;
-    this.saveConfigCallback = saveConfigCallback;
     this.connection = connection || null;
     this.config = config || null;
   }
@@ -212,18 +184,5 @@ export class HomeAssistant {
         entity_id: entity.entity_id,
       },
     );
-  }
-
-  async saveTokens(data: AuthData | null): Promise<void> {
-    console.log("Home Assistant: saveTokens:", data);
-
-    this.saveConfigCallback({
-      accessToken: data?.access_token,
-      refreshToken: data?.refresh_token,
-      clientId: data?.clientId || undefined,
-      expires: data?.expires,
-      expiresIn: data?.expires_in,
-      url: data?.hassUrl,
-    });
   }
 }
