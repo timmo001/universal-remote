@@ -33,17 +33,19 @@ export default function TV() {
     const source_list = entities[entity].attributes.source_list;
     if (!source_list) return defaultSources;
 
-    return source_list.map((source: string): ListItem => ({
-      key: source,
-      name: source,
-      icon: <TvIcon className="h-6 w-6 text-gray-400" />,
-      onClick: () => {
-        homeAssitant.client?.callService("media_player", "select_source", {
-          entity_id: entity,
-          source: source,
-        });
-      },
-    }));
+    return source_list.map(
+      (source: string): ListItem => ({
+        key: source,
+        name: source,
+        icon: <TvIcon className="h-6 w-6 text-gray-400" />,
+        onClick: () => {
+          homeAssitant.client?.callService("media_player", "select_source", {
+            entity_id: entity,
+            source: source,
+          });
+        },
+      }),
+    );
   }, [
     entity,
     homeAssitant.client,
