@@ -45,7 +45,10 @@ export default function Setup() {
         Make sure your Home Assistant URL protocol is the same as the url you
         are using. If you are using https, make sure your url starts with
         https:// and vice versa (
-        <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content">
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content"
+          target="_blank"
+        >
           Mixed content
         </a>
         )
