@@ -42,7 +42,7 @@ export default function Settings() {
           name="tv.entities"
           label="TV Entities"
           icon={<TvIcon className="h-6 w-6 text-gray-200" />}
-          filters={["remote"]}
+          filters={["media_player"]}
           value={settings?.tv?.entities || []}
           handleChange={handleChange}
         />
