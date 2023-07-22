@@ -1,6 +1,6 @@
 "use client";
 import type { HassEntity } from "home-assistant-js-websocket";
-import { ChangeEventHandler, useMemo } from "react";
+import { ChangeEventHandler, useEffect, useMemo } from "react";
 
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import InputLabel from "@/components/inputLabel";
@@ -22,18 +22,13 @@ export default function InputEntities({
 }) {
   const homeAssistant = useHomeAssistant();
 
-  const options = useMemo<Array<string>>(() => {
+  const entities = useMemo<Array<HassEntity>>(() => {
     if (!homeAssistant.entities) {
       console.log("No Home Assistant entities.");
       return [];
     }
-    return Object.values(homeAssistant.entities)
-      .filter(
-        (entity: HassEntity) => !filters || filters.includes(entity.entity_id),
-      )
-      .map((entity: HassEntity) => entity.entity_id)
-      .sort();
-  }, [filters, homeAssistant.entities]);
+    return Object.values(homeAssistant.entities);
+  }, [homeAssistant.entities]);
 
   return (
     <label className="block w-full">
@@ -48,8 +43,16 @@ export default function InputEntities({
           list={`${name}-options`}
         />
         <datalist id={`${name}-options`}>
-          {options.map((option) => (
-            <option key={option} value={option} />
+          {entities.map((entity: HassEntity) => (
+            <option
+              key={entity.entity_id}
+              label={
+                entity.attributes?.friendly_name
+                  ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
+                  : entity.entity_id
+              }
+              value={entity.entity_id}
+            />
           ))}
         </datalist>
       </div>

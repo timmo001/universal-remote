@@ -129,12 +129,10 @@ export function HomeAssistantProvider({
       client
         .connect()
         .then(() => {
-          // if (!homeAssistant.client) {
           setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
             ...prevHomeAssistant,
             client,
           }));
-          // }
         })
         .catch((err) => {
           console.error(err);
