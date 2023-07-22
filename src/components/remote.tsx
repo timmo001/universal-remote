@@ -39,7 +39,7 @@ function Button({
   );
 }
 
-export default function Remote() {
+export default function Remote({ entity }: { entity: string }) {
   const { settings } = useSettings();
   const homeAssitant = useHomeAssistant();
 
@@ -54,7 +54,7 @@ export default function Remote() {
       return;
     }
     homeAssitant.client.callService("remote", "send_command", {
-      entity_id: settings.tv.entities[0],
+      entity_id: entity,
       command: event.currentTarget.name,
     });
   }
