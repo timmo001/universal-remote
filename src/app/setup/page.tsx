@@ -41,6 +41,12 @@ export default function Setup() {
       <h2 className="mb-2 text-2xl font-bold">
         Please enter Home Assistant URL and Long Lived Access Token
       </h2>
+      {window.location.protocol === "https:" && (
+        <p className="mb-2 text-red-500">
+          You are using HTTPS. Make sure your Home Assistant URL is also HTTPS
+          to be able to connect.
+        </p>
+      )}
       <form className="flex w-full flex-col gap-4">
         <InputText
           name="homeAssistant.url"
