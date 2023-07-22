@@ -1,14 +1,10 @@
 "use client";
 import {
   Auth,
-  AuthData,
   callService,
   Connection,
   createConnection,
   createLongLivedTokenAuth,
-  ERR_HASS_HOST_REQUIRED,
-  ERR_INVALID_AUTH,
-  getAuth,
   getUser,
   HassConfig,
   HassEntities,
@@ -57,40 +53,41 @@ export function entitySupportsFeature(
 }
 
 export class HomeAssistant {
-  public config: HomeAssistantConfig | null = null;
-  public connection: Connection | null = null;
-  public haConfig: HassConfig | null = null;
-  public haEntities: HassEntities | null = null;
-  public haServices: HassServices | null = null;
-  public haUser: HassUser | null = null;
-
   private auth: Auth | null = null;
-  private connectedCallback: () => void;
+  private config: HomeAssistantConfig | null = null;
+  private connection: Connection | null = null;
+  private haServices: HassServices | null = null;
+  private connectedCallback: (connection: Connection, user: HassUser) => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
 
   constructor(
-    connectedCallback: () => void,
+    connectedCallback: (connection: Connection, user: HassUser) => void,
     configCallback: (config: HassConfig) => void,
     entitiesCallback: (entities: HassEntities) => void,
     servicesCallback: (services: HassServices) => void,
-    connection?: Connection,
     config?: HomeAssistantConfig,
+    connection?: Connection,
   ) {
+    console.log("Home Assistant: create new client");
+
     this.connectedCallback = connectedCallback;
     this.configCallback = configCallback;
     this.entitiesCallback = entitiesCallback;
     this.servicesCallback = servicesCallback;
-    this.connection = connection || null;
     this.config = config || null;
+    this.connection = connection || null;
   }
 
   public baseUrl(): string | null {
     return this.config?.url || null;
   }
 
-  public connected: boolean = this.connection !== null;
+  public get connected(): boolean {
+    console.log("Home Assistant: connected:", this.connection !== null);
+    return this.connection !== null;
+  }
 
   async callService(
     domain: string,
@@ -115,9 +112,6 @@ export class HomeAssistant {
 
   async connect(): Promise<void> {
     if (this.connection) return;
-
-    console.log("Connecting to Home Assistant:", this.config);
-
     if (!this.config?.url) throw new Error("Missing Home Assistant URL");
     if (!this.config?.accessToken)
       throw new Error("Missing Home Assistant access token");
@@ -143,13 +137,10 @@ export class HomeAssistant {
     });
 
     subscribeConfig(this.connection, (config: HassConfig) => {
-      console.log("Home Assistant config updated");
-      this.haConfig = config;
       this.configCallback(config);
     });
 
     subscribeEntities(this.connection, (entities: HassEntities) => {
-      this.haEntities = entities;
       this.entitiesCallback(entities);
     });
 
@@ -159,9 +150,7 @@ export class HomeAssistant {
     });
 
     getUser(this.connection).then((user: HassUser) => {
-      console.log("Logged into Home Assistant as", user.name);
-      this.haUser = user;
-      this.connectedCallback();
+      this.connectedCallback(this.connection!, user);
     });
   }
 

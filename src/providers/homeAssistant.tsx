@@ -5,38 +5,43 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
+  Connection,
   HassConfig,
   HassEntities,
   HassServices,
+  HassUser,
 } from "home-assistant-js-websocket";
 import { usePathname, useRouter } from "next/navigation";
 
 import { HomeAssistant } from "@/utils/homeAssistant";
 import { useSettings } from "@/providers/settings";
-import { HomeAssistantConfig } from "@/types/settings";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
   config: HassConfig | null;
+  connection: Connection | null;
   entities: HassEntities | null;
   services: HassServices | null;
+  user: HassUser | null;
 };
 
 const defaultHomeAssistantContext: HomeAssistantContextType = {
   client: null,
   config: null,
+  connection: null,
   entities: null,
   services: null,
+  user: null,
 };
 
 const HomeAssistantContext = createContext<HomeAssistantContextType>(
   defaultHomeAssistantContext,
 );
 
-let client: HomeAssistant | null = null;
 export function HomeAssistantProvider({
   children,
 }: {
@@ -50,16 +55,20 @@ export function HomeAssistantProvider({
     defaultHomeAssistantContext,
   );
 
-  const connectedCallback = useCallback((): void => {
-    console.log("Connected to Home Assistant");
-    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
-      ...prevHomeAssistant,
-      client,
-    }));
+  const connectedCallback = useCallback(
+    (connection: Connection, user: HassUser): void => {
+      console.log("Connected to Home Assistant:", user);
+      setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+        ...prevHomeAssistant,
+        connection,
+        user,
+      }));
 
-    // Cleanup search params
-    router.replace(pathname);
-  }, [pathname, router, setHomeAssistant]);
+      // Cleanup search params
+      router.replace(pathname);
+    },
+    [pathname, router, setHomeAssistant],
+  );
 
   const configCallback = useCallback(
     (config: HassConfig): void => {
@@ -92,53 +101,52 @@ export function HomeAssistantProvider({
   );
 
   useEffect(() => {
-    console.log("Setup Home Assistant..");
+    if (!settings?.homeAssistant) return;
 
-    client = new HomeAssistant(
-      connectedCallback,
-      configCallback,
-      entitiesCallback,
-      servicesCallback,
-    );
-
-    if (!settings?.homeAssistant?.url) {
-      console.warn("No url found");
+    if (!settings.homeAssistant?.url) {
+      console.warn("Home Assistant: No url found");
       if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
-    if (!settings?.homeAssistant?.accessToken) {
-      console.warn("No access token found");
+    if (!settings.homeAssistant?.accessToken) {
+      console.warn("Home Assistant: No access token found");
       if (pathname !== "/setup") router.push("/setup");
       return;
     }
 
-    client.config = settings.homeAssistant;
-    if (!client.config) {
-      console.warn("No config found");
-      return;
+    const client =
+      homeAssistant.client ||
+      new HomeAssistant(
+        connectedCallback,
+        configCallback,
+        entitiesCallback,
+        servicesCallback,
+        settings.homeAssistant,
+      );
+
+    if (!client.connected) {
+      client
+        .connect()
+        .then(() => {
+          setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+            ...prevHomeAssistant,
+            client,
+          }));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
-
-    (async () => {
-      try {
-        await client.connect();
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-
-    return () => {
-      if (client) client.disconnect();
-      setHomeAssistant(defaultHomeAssistantContext);
-    };
   }, [
     configCallback,
     connectedCallback,
     entitiesCallback,
+    homeAssistant.client,
     pathname,
     router,
     servicesCallback,
-    settings,
+    settings?.homeAssistant,
   ]);
 
   return (

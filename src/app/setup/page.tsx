@@ -4,7 +4,7 @@ import { CodeBracketIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 
 import { useSettings } from "@/providers/settings";
-import TextInput from "@/components/textInput";
+import InputText from "@/components/inputText";
 
 export default function Setup() {
   const [homeAssistantAccessToken, setHomeAssistantAccessToken] =
@@ -42,14 +42,14 @@ export default function Setup() {
         Please enter Home Assistant URL and Long Lived Access Token
       </h2>
       <form className="flex w-full flex-col gap-4">
-        <TextInput
+        <InputText
           name="homeAssistant.url"
           label="URL"
           icon={<HomeIcon className="h-6 w-6 text-gray-200" />}
           value={homeAssistantUrl}
           handleChange={handleChange}
         />
-        <TextInput
+        <InputText
           name="homeAssistant.accessToken"
           label="Long Lived Access Token"
           icon={<CodeBracketIcon className="h-6 w-6 text-gray-200" />}
