@@ -57,33 +57,29 @@ export function entitySupportsFeature(
 }
 
 export class HomeAssistant {
-  public config: HomeAssistantConfig | null = null;
-  public connection: Connection | null = null;
-  public haConfig: HassConfig | null = null;
-  public haEntities: HassEntities | null = null;
-  public haServices: HassServices | null = null;
-  public haUser: HassUser | null = null;
-
   private auth: Auth | null = null;
-  private connectedCallback: () => void;
+  private config: HomeAssistantConfig | null = null;
+  private connection: Connection | null = null;
+  private haServices: HassServices | null = null;
+  private connectedCallback: (user: HassUser) => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
 
   constructor(
-    connectedCallback: () => void,
+    connectedCallback: (user: HassUser) => void,
     configCallback: (config: HassConfig) => void,
     entitiesCallback: (entities: HassEntities) => void,
     servicesCallback: (services: HassServices) => void,
-    connection?: Connection,
     config?: HomeAssistantConfig,
+    connection?: Connection,
   ) {
     this.connectedCallback = connectedCallback;
     this.configCallback = configCallback;
     this.entitiesCallback = entitiesCallback;
     this.servicesCallback = servicesCallback;
-    this.connection = connection || null;
     this.config = config || null;
+    this.connection = connection || null;
   }
 
   public baseUrl(): string | null {
@@ -144,12 +140,10 @@ export class HomeAssistant {
 
     subscribeConfig(this.connection, (config: HassConfig) => {
       console.log("Home Assistant config updated");
-      this.haConfig = config;
       this.configCallback(config);
     });
 
     subscribeEntities(this.connection, (entities: HassEntities) => {
-      this.haEntities = entities;
       this.entitiesCallback(entities);
     });
 
@@ -160,8 +154,7 @@ export class HomeAssistant {
 
     getUser(this.connection).then((user: HassUser) => {
       console.log("Logged into Home Assistant as", user.name);
-      this.haUser = user;
-      this.connectedCallback();
+      this.connectedCallback(user);
     });
   }
 

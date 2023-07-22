@@ -45,9 +45,7 @@ export function SettingsProvider({
   const [settings, setSettings] = useState<Settings>();
 
   useEffect(() => {
-    console.log("Settings:", settings);
     if (!settings) {
-      console.log("Loading settings...");
       const newSettings = getSettings();
       console.log("Loaded settings:", newSettings);
       setSettings(newSettings);

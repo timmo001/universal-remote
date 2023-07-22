@@ -11,6 +11,7 @@ import {
   HassConfig,
   HassEntities,
   HassServices,
+  HassUser,
 } from "home-assistant-js-websocket";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -50,16 +51,19 @@ export function HomeAssistantProvider({
     defaultHomeAssistantContext,
   );
 
-  const connectedCallback = useCallback((): void => {
-    console.log("Connected to Home Assistant");
-    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
-      ...prevHomeAssistant,
-      client,
-    }));
+  const connectedCallback = useCallback(
+    (user: HassUser): void => {
+      console.log("Connected to Home Assistant:", user);
+      setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+        ...prevHomeAssistant,
+        client,
+      }));
 
-    // Cleanup search params
-    router.replace(pathname);
-  }, [pathname, router, setHomeAssistant]);
+      // Cleanup search params
+      router.replace(pathname);
+    },
+    [pathname, router, setHomeAssistant],
+  );
 
   const configCallback = useCallback(
     (config: HassConfig): void => {
@@ -92,32 +96,28 @@ export function HomeAssistantProvider({
   );
 
   useEffect(() => {
+    if (!settings) return;
     console.log("Setup Home Assistant..");
+
+    if (!settings.homeAssistant?.url) {
+      console.warn("No url found");
+      if (pathname !== "/setup") router.push("/setup");
+      return;
+    }
+
+    if (!settings.homeAssistant?.accessToken) {
+      console.warn("No access token found");
+      if (pathname !== "/setup") router.push("/setup");
+      return;
+    }
 
     client = new HomeAssistant(
       connectedCallback,
       configCallback,
       entitiesCallback,
       servicesCallback,
+      settings.homeAssistant,
     );
-
-    if (!settings?.homeAssistant?.url) {
-      console.warn("No url found");
-      if (pathname !== "/setup") router.push("/setup");
-      return;
-    }
-
-    if (!settings?.homeAssistant?.accessToken) {
-      console.warn("No access token found");
-      if (pathname !== "/setup") router.push("/setup");
-      return;
-    }
-
-    client.config = settings.homeAssistant;
-    if (!client.config) {
-      console.warn("No config found");
-      return;
-    }
 
     (async () => {
       try {
