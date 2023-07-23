@@ -20,7 +20,7 @@ export default function List({ items }: { items: Array<ListItem> }) {
           ) : (
             <a
               key={key}
-              className="flex flex-row items-center gap-3"
+              className="flex cursor-pointer flex-row items-center gap-3"
               onClick={onClick}
             >
               {icon}
