@@ -41,11 +41,11 @@ export default function InputTV({
         label="TV Entities"
         icon={<TvIcon className="h-6 w-6 text-gray-200" />}
       />
-      <div className="mt-2 flex w-full flex-wrap">
+      <div className="mt-2 flex w-full flex-wrap gap-2">
         {tvs.map((tv: TVSetting, index: number) => (
           <div
             key={index}
-            className="mb-2 mr-2 flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
+            className="flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
           >
             <span>{tv.entity}</span>
             <button

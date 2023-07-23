@@ -96,11 +96,11 @@ export default function InputEntities({
           ))}
         </datalist>
       </div>
-      <div className="mt-2 flex w-full flex-wrap">
+      <div className="mt-2 flex w-full flex-wrap gap-2">
         {value.map((option: string) => (
           <div
             key={option}
-            className="mb-2 mr-2 flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
+            className="flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
           >
             <span>{option}</span>
             <button
