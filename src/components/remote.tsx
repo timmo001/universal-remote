@@ -53,7 +53,7 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No Home Assistant client");
       return;
     }
-    homeAssitant.client.callService("remote", "send_command", {
+    homeAssitant.client.callService("webostv", "command", {
       entity_id: entity,
       command: event.currentTarget.name,
     });
