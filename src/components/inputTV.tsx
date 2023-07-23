@@ -24,7 +24,7 @@ export default function InputTV({
   const [itemEditing, setItemEditing] = useState<ItemEditing>();
 
   function handleChangeItem(event: ChangeEvent<HTMLInputElement>): void {
-    const target = event.target as HTMLInputElement;
+    throw new Error("Function not implemented.");
   }
 
   function handleRemoveItem(index: number): void {
@@ -47,7 +47,17 @@ export default function InputTV({
             key={index}
             className="flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
           >
-            <span>{tv.entity}</span>
+            <span
+              onClick={() => {
+                setItemEditing({
+                  index,
+                  entity: tv.entity,
+                  macAddress: tv.macAddress,
+                });
+              }}
+            >
+              {tv.entity}
+            </span>
             <button
               className="ml-2 text-gray-300 hover:text-gray-100"
               onClick={() => handleRemoveItem(index)}
@@ -68,6 +78,7 @@ export default function InputTV({
         ))}
         <div className="flex items-center rounded-full bg-gray-700 p-2 text-gray-100">
           <button
+            type="button"
             className="text-gray-300 hover:text-gray-100"
             onClick={() => {
               setItemEditing({
@@ -97,7 +108,7 @@ export default function InputTV({
                 icon={<TvIcon className="h-6 w-6 text-gray-200" />}
               />
               <InputEntity
-                name="tv.entities"
+                name={`tv.${itemEditing.index}.entitiy`}
                 label="Entity"
                 filter={"media_player"}
                 value={itemEditing.entity || ""}
