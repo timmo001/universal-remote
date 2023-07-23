@@ -61,7 +61,7 @@ export default function Remote({ entity }: { entity: string }) {
   }
 
   function handleCommandClick(event: MouseEvent<HTMLButtonElement>): void {
-    console.log("Button clicked:", event.currentTarget.name);
+    console.log("Command clicked:", event.currentTarget.name);
     if (!settings || !settings.tv || !settings.tv.entities) {
       console.error("No TV defined");
       return;
@@ -76,6 +76,29 @@ export default function Remote({ entity }: { entity: string }) {
     });
   }
 
+  function handlePowerClick(event: MouseEvent<HTMLButtonElement>): void {
+    console.log("Power clicked:", event.currentTarget.name);
+    if (!settings || !settings.tv || !settings.tv.entities) {
+      console.error("No TV defined");
+      return;
+    }
+    if (!homeAssitant.client) {
+      console.error("No Home Assistant client");
+      return;
+    }
+    if (!homeAssitant.entities) {
+      console.error("No Home Assistant entities");
+      return;
+    }
+    homeAssitant.client.callService(
+      "media_player",
+      homeAssitant.entities[entity].state === "off" ? "turn_on" : "turn_off",
+      {
+        entity_id: entity,
+      },
+    );
+  }
+
   if (!settings || !settings.tv || !settings.tv.entities)
     return <h2 className="mb-2 text-2xl font-bold">No TV defined</h2>;
 
@@ -85,7 +108,7 @@ export default function Remote({ entity }: { entity: string }) {
         <Button
           name="power"
           icon={<PowerIcon className="h-6 w-6 text-red-600" />}
-          onClick={handleButtonClick}
+          onClick={handlePowerClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
