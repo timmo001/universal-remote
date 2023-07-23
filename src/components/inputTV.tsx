@@ -23,6 +23,8 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
   function handleChangeItem(event: ChangeEvent<HTMLInputElement>): void {
     if (!itemEditing) return;
 
+    console.log("handleChangeItem", event.target);
+
     setItemEditing({
       ...itemEditing,
       [event.target.name]: event.target.value,
@@ -48,9 +50,10 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
   }
 
   function handleModalSave(): void {
+    console.log("handleModalSave", itemEditing);
     if (!itemEditing || !settings) return;
 
-    const newTvs = [...tvs];
+    const newTvs: Array<TVSetting> = [...tvs];
     if (itemEditing.index === tvs.length) {
       newTvs.push({
         entity: itemEditing.entity,
@@ -146,7 +149,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
                 icon={<TvIcon className="h-6 w-6 text-gray-200" />}
               />
               <InputEntity
-                name="entitiy"
+                name="entity"
                 label="Entity"
                 filter={"media_player"}
                 value={itemEditing.entity || ""}
