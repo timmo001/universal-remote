@@ -153,7 +153,7 @@ export default function Remote({ entity }: { entity: string }) {
           onClick={handleButtonClick}
         />
         <Button
-          name="SETTINGS"
+          name="MENU"
           icon={<Cog6ToothIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
