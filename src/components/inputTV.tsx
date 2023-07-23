@@ -29,7 +29,19 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
     });
   }
 
-  function handleRemoveItem(index: number): void {}
+  function handleRemoveItem(index: number): void {
+    if (!settings) return;
+
+    const newTvs = [...tvs];
+    newTvs.splice(index, 1);
+    updateSettings({
+      ...settings,
+      tv: {
+        ...settings?.tv,
+        entities: newTvs,
+      },
+    });
+  }
 
   function handleModalClose(): void {
     setItemEditing(undefined);
