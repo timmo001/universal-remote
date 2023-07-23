@@ -10,6 +10,7 @@ import {
   Cog6ToothIcon,
   ForwardIcon,
   HomeIcon,
+  InformationCircleIcon,
   MinusIcon,
   PauseIcon,
   PlayIcon,
@@ -53,7 +54,7 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No Home Assistant client");
       return;
     }
-    homeAssitant.client.callService("webostv", "command", {
+    homeAssitant.client.callService("webostv", "button", {
       entity_id: entity,
       command: event.currentTarget.name,
     });
@@ -80,95 +81,98 @@ export default function Remote({ entity }: { entity: string }) {
             onClick={handleButtonClick}
           />
         ))}
-        <div />
+        <Button
+          name="INFO"
+          icon={<InformationCircleIcon className="h-6 w-6" />}
+          onClick={handleButtonClick}
+        />
         <Button
           name="0"
           icon={<span className="text-2xl">0</span>}
           onClick={handleButtonClick}
         />
-        <div />
+        <Button
+          name="MENU"
+          icon={<span className="text-2xl">...</span>}
+          onClick={handleButtonClick}
+        />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
         <Button
-          name="volumeUp"
+          name="VOLUMEUP"
           icon={<PlusIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="mute"
+          name="MUTE"
           icon={<SpeakerXMarkIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="channelUp"
+          name="CHANNELUP"
           icon={<ChevronUpIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="volumeDown"
+          name="VOLUMEDOWN"
           icon={<MinusIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <div />
         <Button
-          name="channelDown"
+          name="CHANNELDOWN"
           icon={<ChevronDownIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
         <Button
-          name="home"
+          name="HOME"
           icon={<HomeIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="up"
+          name="UP"
           icon={<ChevronUpIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="settings"
+          name="SETTINGS"
           icon={<Cog6ToothIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="left"
+          name="LEFT"
           icon={<ChevronLeftIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="ok"
+          name="ENTER"
           icon={<span className="text-2xl">OK</span>}
           onClick={handleButtonClick}
         />
         <Button
-          name="right"
+          name="RIGHT"
           icon={<ChevronRightIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="back"
+          name="BACK"
           icon={<ArrowUturnLeftIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="down"
+          name="DOWN"
           icon={<ChevronDownIcon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="guide"
-          icon={<TvIcon className="h-6 w-6" />}
+          name="EXIT"
+          icon={<span className="text-2xl">EXIT</span>}
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
-        <Button
-          name="rewind"
-          icon={<BackwardIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
-        />
+      <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
         <Button
           name="play"
           icon={<PlayIcon className="h-6 w-6" />}
@@ -177,23 +181,6 @@ export default function Remote({ entity }: { entity: string }) {
         <Button
           name="pause"
           icon={<PauseIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="fastForward"
-          icon={<ForwardIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
-        />
-      </section>
-      <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
-        <Button
-          name="stop"
-          icon={<StopIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="record"
-          icon={<span className="h-5 w-5 rounded-full bg-red-600" />}
           onClick={handleButtonClick}
         />
       </section>
