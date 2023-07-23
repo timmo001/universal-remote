@@ -7,6 +7,7 @@ import type { TVSetting } from "@/types/settings";
 import InputText from "@/components/inputText";
 import InputEntity from "@/components/inputEntity";
 import InputLabel from "@/components/inputLabel";
+import { useSettings } from "@/providers/settings";
 
 interface ItemEditing extends TVSetting {
   index: number;
@@ -14,25 +15,43 @@ interface ItemEditing extends TVSetting {
 
 Modal.setAppElement("#container");
 
-export default function InputTV({
-  value: tvs,
-  handleChange,
-}: {
-  value: Array<TVSetting>;
-  handleChange: ChangeEventHandler<HTMLInputElement>;
-}) {
+export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
+  const { settings, updateSettings } = useSettings();
+
   const [itemEditing, setItemEditing] = useState<ItemEditing>();
 
   function handleChangeItem(event: ChangeEvent<HTMLInputElement>): void {
-    throw new Error("Function not implemented.");
+    if (!itemEditing) return;
+
+    setItemEditing({
+      ...itemEditing,
+      [event.target.name]: event.target.value,
+    });
   }
 
-  function handleRemoveItem(index: number): void {
-    throw new Error("Function not implemented.");
-  }
+  function handleRemoveItem(index: number): void {}
 
   function handleModalClose(): void {
     setItemEditing(undefined);
+  }
+
+  function handleModalSave(): void {
+    if (!itemEditing || !settings) return;
+
+    const newTvs = [...tvs];
+    newTvs[itemEditing.index] = {
+      entity: itemEditing.entity,
+      macAddress: itemEditing.macAddress,
+    };
+    updateSettings({
+      ...settings,
+      tv: {
+        ...settings?.tv,
+        entities: newTvs,
+      },
+    });
+
+    handleModalClose();
   }
 
   return (
@@ -102,26 +121,40 @@ export default function InputTV({
       >
         <div className="rounded-lg bg-black p-6 opacity-100">
           {itemEditing && (
-            <div className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4">
               <InputLabel
                 label="TV"
                 icon={<TvIcon className="h-6 w-6 text-gray-200" />}
               />
               <InputEntity
-                name={`tv.${itemEditing.index}.entitiy`}
+                name="entitiy"
                 label="Entity"
                 filter={"media_player"}
                 value={itemEditing.entity || ""}
                 handleChange={handleChangeItem}
               />
               <InputText
-                name={`tv.${itemEditing.index}.macAddress`}
+                name="macAddress"
                 label="MAC Address"
                 value={itemEditing.macAddress || ""}
                 handleChange={handleChangeItem}
               />
-            </div>
+            </form>
           )}
+          <div className="mt-4 flex flex-row justify-end gap-2">
+            <button
+              className="rounded-full bg-gray-900 px-4 py-2 text-gray-300 hover:text-gray-100"
+              onClick={handleModalClose}
+            >
+              Close
+            </button>
+            <button
+              className="rounded-full bg-gray-800 px-4 py-2 text-gray-300 hover:text-gray-100"
+              onClick={handleModalSave}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </Modal>
     </>

@@ -35,10 +35,7 @@ export default function Settings() {
             Update Home Assistant Configuration
           </button>
         </Link>
-        <InputTV
-          value={settings?.tv?.entities || []}
-          handleChange={handleChange}
-        />
+        <InputTV value={settings?.tv?.entities || []} />
         <InputEntities
           name="music.entities"
           label="Music Entities"
