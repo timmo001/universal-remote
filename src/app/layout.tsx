@@ -23,7 +23,10 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SettingsProvider>
           <HomeAssistantProvider>
-            <div className="mx-auto flex min-h-screen max-w-xs flex-col items-baseline justify-start gap-1 px-4 py-4">
+            <div
+              className="mx-auto flex min-h-screen max-w-xs flex-col items-baseline justify-start gap-1 px-4 py-4"
+              id="container"
+            >
               <Header />
               <main className="mx-2 my-4 flex min-h-screen w-full max-w-xs flex-col items-baseline justify-start gap-2">
                 {children}

@@ -1,14 +1,11 @@
 "use client";
 import { ChangeEvent } from "react";
-import {
-  LightBulbIcon,
-  MusicalNoteIcon,
-  TvIcon,
-} from "@heroicons/react/24/outline";
+import { LightBulbIcon, MusicalNoteIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 import { useSettings } from "@/providers/settings";
 import InputEntities from "@/components/inputEntities";
+import InputTV from "@/components/inputTV";
 
 export default function Settings() {
   const { settings, updateSettings } = useSettings();
@@ -38,11 +35,7 @@ export default function Settings() {
             Update Home Assistant Configuration
           </button>
         </Link>
-        <InputEntities
-          name="tv.entities"
-          label="TV Entities"
-          icon={<TvIcon className="h-6 w-6 text-gray-200" />}
-          filters={["media_player"]}
+        <InputTV
           value={settings?.tv?.entities || []}
           handleChange={handleChange}
         />
