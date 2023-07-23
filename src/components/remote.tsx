@@ -3,6 +3,7 @@ import { MouseEvent, MouseEventHandler } from "react";
 import {
   ArrowUturnLeftIcon,
   BackwardIcon,
+  Bars3Icon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -18,7 +19,6 @@ import {
   PowerIcon,
   SpeakerXMarkIcon,
   StopIcon,
-  TvIcon,
 } from "@heroicons/react/24/outline";
 
 import { useSettings } from "@/providers/settings";
@@ -60,6 +60,22 @@ export default function Remote({ entity }: { entity: string }) {
     });
   }
 
+  function handleCommandClick(event: MouseEvent<HTMLButtonElement>): void {
+    console.log("Button clicked:", event.currentTarget.name);
+    if (!settings || !settings.tv || !settings.tv.entities) {
+      console.error("No TV defined");
+      return;
+    }
+    if (!homeAssitant.client) {
+      console.error("No Home Assistant client");
+      return;
+    }
+    homeAssitant.client.callService("webostv", "command", {
+      entity_id: entity,
+      command: event.currentTarget.name,
+    });
+  }
+
   if (!settings || !settings.tv || !settings.tv.entities)
     return <h2 className="mb-2 text-2xl font-bold">No TV defined</h2>;
 
@@ -93,7 +109,7 @@ export default function Remote({ entity }: { entity: string }) {
         />
         <Button
           name="MENU"
-          icon={<span className="text-2xl">...</span>}
+          icon={<Bars3Icon className="h-6 w-6" />}
           onClick={handleButtonClick}
         />
       </section>
@@ -168,40 +184,62 @@ export default function Remote({ entity }: { entity: string }) {
         />
         <Button
           name="EXIT"
-          icon={<span className="text-2xl">EXIT</span>}
+          icon={<span className="text-1xl">EXIT</span>}
           onClick={handleButtonClick}
+        />
+      </section>
+      <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
+        <Button
+          name="media.controls/rewind"
+          icon={<BackwardIcon className="h-6 w-6" />}
+          onClick={handleCommandClick}
+        />
+        <Button
+          name="media.controls/play"
+          icon={<PlayIcon className="h-6 w-6" />}
+          onClick={handleCommandClick}
+        />
+        <Button
+          name="media.controls/pause"
+          icon={<PauseIcon className="h-6 w-6" />}
+          onClick={handleCommandClick}
+        />
+        <Button
+          name="media.controls/fastForward"
+          icon={<ForwardIcon className="h-6 w-6" />}
+          onClick={handleCommandClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
         <Button
-          name="play"
-          icon={<PlayIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
+          name="media.controls/stop"
+          icon={<StopIcon className="h-6 w-6" />}
+          onClick={handleCommandClick}
         />
         <Button
-          name="pause"
-          icon={<PauseIcon className="h-6 w-6" />}
-          onClick={handleButtonClick}
+          name="media.controls/Record"
+          icon={<span className="h-5 w-5 rounded-full bg-red-600" />}
+          onClick={handleCommandClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-4 gap-x-1 gap-y-1">
         <Button
-          name="red"
+          name="RED"
           icon={<span className="h-4 w-8 rounded-full bg-red-600" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="green"
+          name="GREEN"
           icon={<span className="h-4 w-8 rounded-full bg-green-600" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="yellow"
+          name="YELLOW"
           icon={<span className="h-4 w-8 rounded-full bg-yellow-600" />}
           onClick={handleButtonClick}
         />
         <Button
-          name="blue"
+          name="BLUE"
           icon={<span className="h-4 w-8 rounded-full bg-blue-600" />}
           onClick={handleButtonClick}
         />
