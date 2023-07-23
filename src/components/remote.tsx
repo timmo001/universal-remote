@@ -56,7 +56,7 @@ export default function Remote({ entity }: { entity: string }) {
     }
     homeAssitant.client.callService("webostv", "button", {
       entity_id: entity,
-      command: event.currentTarget.name,
+      button: event.currentTarget.name,
     });
   }
 
