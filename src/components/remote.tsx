@@ -131,8 +131,8 @@ export default function Remote({ entity }: { entity: string }) {
           onClick={handleButtonClick}
         />
         <Button
-          name="MENU"
-          icon={<Bars3Icon className="h-6 w-6" />}
+          name="GUIDE"
+          icon={<span className="text-1xl">GUIDE</span>}
           onClick={handleButtonClick}
         />
       </section>
