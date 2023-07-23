@@ -50,7 +50,6 @@ export default function InputEntities({
         value: target.value,
       },
     } as unknown as React.ChangeEvent<HTMLInputElement>);
-    target.value = "";
   }
 
   return (
@@ -63,7 +62,7 @@ export default function InputEntities({
           name={name}
           onChange={handleEntityChange}
           list={`${name}-options`}
-          value={value}
+          defaultValue={value}
         />
         <datalist id={`${name}-options`}>
           {entities.map((entity: HassEntity) => (
