@@ -18,7 +18,7 @@ const defaultSources: Array<ListItem> = [
 
 export default function TV() {
   const { settings } = useSettings();
-  const homeAssitant = useHomeAssistant();
+  const homeAssistant = useHomeAssistant();
 
   const entity = useMemo<string>(() => {
     if (!settings?.tv?.entities || settings.tv.entities.length < 1) return "";
@@ -26,7 +26,7 @@ export default function TV() {
   }, [settings?.tv?.entities]);
 
   const sources = useMemo<Array<ListItem>>(() => {
-    const entities = homeAssitant.entities;
+    const entities = homeAssistant.entities;
     if (!entities || !settings?.tv?.entities || settings.tv.entities.length < 1)
       return defaultSources;
 
@@ -39,7 +39,7 @@ export default function TV() {
         name: source,
         icon: <TvIcon className="h-6 w-6 text-gray-400" />,
         onClick: () => {
-          homeAssitant.client?.callService("media_player", "select_source", {
+          homeAssistant.client?.callService("media_player", "select_source", {
             entity_id: entity,
             source: source,
           });
@@ -48,8 +48,8 @@ export default function TV() {
     );
   }, [
     entity,
-    homeAssitant.client,
-    homeAssitant.entities,
+    homeAssistant.client,
+    homeAssistant.entities,
     settings?.tv?.entities,
   ]);
 

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { LightBulbIcon } from "@heroicons/react/24/outline";
 
 import type { ListItem } from "@/types/list";
@@ -8,22 +8,35 @@ import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
 
 export default function Lights() {
-  const [items, setItems] = useState<ListItem[]>([]);
-
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
-  useEffect(() => {
-    if (!settings || !homeAssistant.entities) return;
-    if (settings.lights?.entities.length === 0) return;
-    const newItems = settings.lights?.entities.map((entity: string) => ({
-      key: entity,
-      name:
-        homeAssistant.entities?.[entity]?.attributes?.friendly_name ?? entity,
-      icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
-    }));
-    setItems(newItems);
-  }, [settings, homeAssistant.entities]);
+  const items = useMemo<Array<ListItem>>(() => {
+    const entities = homeAssistant.entities;
+    if (
+      !entities ||
+      !settings?.lights?.entities ||
+      settings.lights.entities.length < 1
+    )
+      return [];
+    return settings.lights?.entities.map(
+      (entity: string): ListItem => ({
+        key: entity,
+        name:
+          homeAssistant.entities?.[entity]?.attributes?.friendly_name ?? entity,
+        icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
+        onClick: () => {
+          homeAssistant.client?.callService("light", "toggle", {
+            entity_id: entity,
+          });
+        },
+      }),
+    );
+  }, [
+    homeAssistant.client,
+    homeAssistant.entities,
+    settings?.lights?.entities,
+  ]);
 
   if (!settings?.lights?.entities || settings.lights.entities.length < 1)
     return (

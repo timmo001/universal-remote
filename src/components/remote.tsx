@@ -42,7 +42,7 @@ function Button({
 
 export default function Remote({ entity }: { entity: string }) {
   const { settings } = useSettings();
-  const homeAssitant = useHomeAssistant();
+  const homeAssistant = useHomeAssistant();
 
   function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
     console.log("Button clicked:", event.currentTarget.name);
@@ -50,11 +50,11 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No TV defined");
       return;
     }
-    if (!homeAssitant.client) {
+    if (!homeAssistant.client) {
       console.error("No Home Assistant client");
       return;
     }
-    homeAssitant.client.callService("webostv", "button", {
+    homeAssistant.client.callService("webostv", "button", {
       entity_id: entity,
       button: event.currentTarget.name,
     });
@@ -66,11 +66,11 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No TV defined");
       return;
     }
-    if (!homeAssitant.client) {
+    if (!homeAssistant.client) {
       console.error("No Home Assistant client");
       return;
     }
-    homeAssitant.client.callService("webostv", "command", {
+    homeAssistant.client.callService("webostv", "command", {
       entity_id: entity,
       command: event.currentTarget.name,
     });
@@ -82,17 +82,17 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No TV defined");
       return;
     }
-    if (!homeAssitant.client) {
+    if (!homeAssistant.client) {
       console.error("No Home Assistant client");
       return;
     }
-    if (!homeAssitant.entities) {
+    if (!homeAssistant.entities) {
       console.error("No Home Assistant entities");
       return;
     }
-    homeAssitant.client.callService(
+    homeAssistant.client.callService(
       "media_player",
-      homeAssitant.entities[entity].state === "off" ? "turn_on" : "turn_off",
+      homeAssistant.entities[entity].state === "off" ? "turn_on" : "turn_off",
       {
         entity_id: entity,
       },
