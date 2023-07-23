@@ -51,10 +51,17 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
     if (!itemEditing || !settings) return;
 
     const newTvs = [...tvs];
-    newTvs[itemEditing.index] = {
-      entity: itemEditing.entity,
-      macAddress: itemEditing.macAddress,
-    };
+    if (itemEditing.index === tvs.length) {
+      newTvs.push({
+        entity: itemEditing.entity,
+        macAddress: itemEditing.macAddress,
+      });
+    } else {
+      newTvs[itemEditing.index] = {
+        entity: itemEditing.entity,
+        macAddress: itemEditing.macAddress,
+      };
+    }
     updateSettings({
       ...settings,
       tv: {
