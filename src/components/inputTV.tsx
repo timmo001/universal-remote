@@ -23,8 +23,6 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
   function handleChangeItem(event: ChangeEvent<HTMLInputElement>): void {
     if (!itemEditing) return;
 
-    console.log("handleChangeItem", event.target);
-
     setItemEditing({
       ...itemEditing,
       [event.target.name]: event.target.value,
@@ -50,7 +48,6 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
   }
 
   function handleModalSave(): void {
-    console.log("handleModalSave", itemEditing);
     if (!itemEditing || !settings) return;
 
     const newTvs: Array<TVSetting> = [...tvs];
@@ -89,6 +86,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
             className="flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
           >
             <span
+              className="cursor-pointer"
               onClick={() => {
                 setItemEditing({
                   index,
