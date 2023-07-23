@@ -11,7 +11,12 @@ export interface HomeAssistantConfig {
 }
 
 export interface TvSettings {
-  entities: Array<string>;
+  entities: Array<TVSetting>;
+}
+
+export interface TVSetting {
+  entity: string;
+  macAddress?: string;
 }
 
 export interface MusicSettings {

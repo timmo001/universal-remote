@@ -7,6 +7,7 @@ import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
 import Remote from "@/components/remote";
+import { TVSetting } from "@/types/settings";
 
 const defaultSources: Array<ListItem> = [
   {
@@ -20,17 +21,22 @@ export default function TV() {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
-  const entity = useMemo<string>(() => {
-    if (!settings?.tv?.entities || settings.tv.entities.length < 1) return "";
+  const tv = useMemo<TVSetting | null>(() => {
+    if (!settings?.tv?.entities || settings.tv.entities.length < 1) return null;
     return settings.tv.entities[0];
   }, [settings?.tv?.entities]);
 
   const sources = useMemo<Array<ListItem>>(() => {
     const entities = homeAssistant.entities;
-    if (!entities || !settings?.tv?.entities || settings.tv.entities.length < 1)
+    if (
+      !tv ||
+      !entities ||
+      !settings?.tv?.entities ||
+      settings.tv.entities.length < 1
+    )
       return defaultSources;
 
-    const source_list = entities[entity].attributes.source_list;
+    const source_list = entities[tv.entity].attributes.source_list;
     if (!source_list) return defaultSources;
 
     return source_list.map(
@@ -40,20 +46,20 @@ export default function TV() {
         icon: <TvIcon className="h-6 w-6 text-gray-400" />,
         onClick: () => {
           homeAssistant.client?.callService("media_player", "select_source", {
-            entity_id: entity,
+            entity_id: tv.entity,
             source: source,
           });
         },
       }),
     );
   }, [
-    entity,
+    tv,
     homeAssistant.client,
     homeAssistant.entities,
     settings?.tv?.entities,
   ]);
 
-  if (!settings?.tv?.entities || settings.tv.entities.length < 1)
+  if (!tv || !settings?.tv?.entities || settings.tv.entities.length < 1)
     return (
       <>
         <h2 className="mb-2 text-2xl font-bold">No TV defined</h2>
@@ -65,7 +71,7 @@ export default function TV() {
 
   return (
     <>
-      <Remote entity={entity} />
+      <Remote tv={tv} />
       <h2 className="mb-2 text-2xl font-bold">Sources</h2>
       <List items={sources} />
     </>

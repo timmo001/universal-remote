@@ -3,7 +3,6 @@ import { MouseEvent, MouseEventHandler } from "react";
 import {
   ArrowUturnLeftIcon,
   BackwardIcon,
-  Bars3Icon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -21,6 +20,7 @@ import {
   StopIcon,
 } from "@heroicons/react/24/outline";
 
+import type { TVSetting } from "@/types/settings";
 import { useSettings } from "@/providers/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 
@@ -40,7 +40,7 @@ function Button({
   );
 }
 
-export default function Remote({ entity }: { entity: string }) {
+export default function Remote({ tv }: { tv: TVSetting }) {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
@@ -55,7 +55,7 @@ export default function Remote({ entity }: { entity: string }) {
       return;
     }
     homeAssistant.client.callService("webostv", "button", {
-      entity_id: entity,
+      entity_id: tv.entity,
       button: event.currentTarget.name,
     });
   }
@@ -71,7 +71,7 @@ export default function Remote({ entity }: { entity: string }) {
       return;
     }
     homeAssistant.client.callService("webostv", "command", {
-      entity_id: entity,
+      entity_id: tv.entity,
       command: event.currentTarget.name,
     });
   }
@@ -90,13 +90,20 @@ export default function Remote({ entity }: { entity: string }) {
       console.error("No Home Assistant entities");
       return;
     }
-    homeAssistant.client.callService(
-      "media_player",
-      homeAssistant.entities[entity].state === "off" ? "turn_on" : "turn_off",
-      {
-        entity_id: entity,
-      },
-    );
+    const state = homeAssistant.entities[tv.entity].state;
+    if (state === "off" && tv.macAddress) {
+      homeAssistant.client.callService("wake_on_lan", "send_magic_packet", {
+        mac: tv.macAddress,
+      });
+    } else {
+      homeAssistant.client.callService(
+        "media_player",
+        state !== "off" ? "turn_off" : "turn_on",
+        {
+          entity_id: tv.entity,
+        },
+      );
+    }
   }
 
   if (!settings || !settings.tv || !settings.tv.entities)
