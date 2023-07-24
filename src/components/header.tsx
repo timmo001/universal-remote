@@ -6,9 +6,10 @@ import Icon from "@mdi/react";
 export const pageMap: { [path: string]: string } = {
   "/": "Home",
   "/lights": "Lights",
-  "/music": "Music",
+  "/media": "Media",
   "/settings": "Settings",
   "/setup": "Setup",
+  "/switches": "Switches",
   "/tv": "TV",
 };
 
