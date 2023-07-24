@@ -32,6 +32,13 @@ const items: Array<ListItem> = [
     icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
   },
   {
+    key: "switches",
+    type: ListItemType.Link,
+    name: "Switches",
+    url: "/switches",
+    icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
+  },
+  {
     key: "settings",
     type: ListItemType.Link,
     name: "Settings",

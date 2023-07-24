@@ -52,6 +52,14 @@ export default function Settings() {
           value={settings?.lights?.entities || []}
           handleChange={handleChange}
         />
+        <InputEntities
+          name="switches.entities"
+          label="Switch Entities"
+          icon={<LightBulbIcon className="h-6 w-6 text-gray-200" />}
+          filters={["switch"]}
+          value={settings?.switches?.entities || []}
+          handleChange={handleChange}
+        />
       </form>
     </>
   );
