@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { TvIcon } from "@heroicons/react/24/outline";
 
-import type { ListItem } from "@/types/list";
+import { ListItemType, type ListItem } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
@@ -12,8 +12,9 @@ import { TVSetting } from "@/types/settings";
 const defaultSources: Array<ListItem> = [
   {
     key: "tv",
+    type: ListItemType.Source,
     name: "TV",
-    icon: <TvIcon className="h-6 w-6 text-gray-400" />,
+    icon: <TvIcon className="h-6 w-6" />,
   },
 ];
 
@@ -42,8 +43,9 @@ export default function TV() {
     return source_list.map(
       (source: string): ListItem => ({
         key: source,
+        type: ListItemType.Source,
         name: source,
-        icon: <TvIcon className="h-6 w-6 text-gray-400" />,
+        icon: <TvIcon className="h-6 w-6" />,
         onClick: () => {
           homeAssistant.client?.callService("media_player", "select_source", {
             entity_id: tv.entity,

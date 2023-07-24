@@ -174,4 +174,20 @@ export class HomeAssistant {
       },
     );
   }
+
+  getIconColor(entity: HassEntity): string {
+    const domain = entity.entity_id.split(".")[0];
+    switch (domain) {
+      case "light":
+        return entity.state === "on"
+          ? entity.attributes.rgb_color
+            ? `rgb(${entity.attributes.rgb_color.join(",")})`
+            : "text-yellow-400"
+          : "text-gray-400";
+      case "media_player":
+        return entity.state === "playing" ? "text-green-400" : "text-gray-400";
+      default:
+        return entity.state === "on" ? "text-yellow-400" : "text-gray-400";
+    }
+  }
 }

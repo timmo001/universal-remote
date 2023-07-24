@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { LightBulbIcon } from "@heroicons/react/24/outline";
 
-import type { ListItem } from "@/types/list";
+import { ListItemType, type ListItem } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
@@ -22,9 +22,10 @@ export default function Lights() {
     return settings.lights?.entities.map(
       (entity: string): ListItem => ({
         key: entity,
+        type: ListItemType.Entity,
         name:
           homeAssistant.entities?.[entity]?.attributes?.friendly_name ?? entity,
-        icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
+        icon: <LightBulbIcon className="h-6 w-6" />,
         onClick: () => {
           homeAssistant.client?.callService("light", "toggle", {
             entity_id: entity,
