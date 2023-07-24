@@ -80,7 +80,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
         label="TV Entities"
         icon={<Icon title="TV" size={1} path={mdiTelevision} />}
       />
-      <div className="mt-2 flex w-full flex-wrap gap-2">
+      <div className="flex w-full flex-wrap gap-2">
         {tvs.map((tv: TVSetting, index: number) => (
           <div
             key={index}
