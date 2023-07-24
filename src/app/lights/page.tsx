@@ -25,7 +25,8 @@ export default function Lights() {
         key: item.entity,
         type: ListItemType.Entity,
         name:
-          homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ?? item.entity,
+          homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
+          item.entity,
         icon: <LightBulbIcon className="h-6 w-6" />,
         onClick: () => {
           homeAssistant.client?.callService("light", "toggle", {
