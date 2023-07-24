@@ -16,7 +16,6 @@ export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
       );
 
     return itemsIn.map((item: ListItem): ListItem => {
-      console.log("Item:", item);
       if (
         item.type !== ListItemType.Entity ||
         !homeAssistant.client ||
@@ -25,16 +24,12 @@ export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
         return item;
 
       const entity = homeAssistant.entities[item.key];
-      console.log("Entity:", entity);
-
-      const color = entity
-        ? homeAssistant.client.getIconColor(entity)
-        : "text-gray-400";
-      console.log("Color:", color);
 
       return {
         ...item,
-        iconColor: color,
+        iconColor: entity
+          ? homeAssistant.client.getIconColor(entity)
+          : "text-gray-400",
       };
     });
   }, [homeAssistant.client, homeAssistant.entities, itemsIn]);
