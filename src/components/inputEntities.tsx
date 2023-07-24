@@ -2,6 +2,7 @@
 import type { HassEntity } from "home-assistant-js-websocket";
 import { ChangeEventHandler, KeyboardEvent, useMemo } from "react";
 
+import type { EntitySetting } from "@/types/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import InputLabel from "@/components/inputLabel";
 
@@ -17,7 +18,7 @@ export default function InputEntities({
   label?: string;
   icon?: JSX.Element;
   filters?: Array<string>;
-  value: Array<string>;
+  value: Array<EntitySetting>;
   handleChange: ChangeEventHandler<HTMLInputElement>;
 }) {
   const homeAssistant = useHomeAssistant();
@@ -45,7 +46,8 @@ export default function InputEntities({
     if (target.value === "") return;
 
     // Prevent duplicate values
-    if (value.includes(target.value)) return;
+    if (value.some((item: EntitySetting) => item.entity === target.value))
+      return;
 
     // Prevent non-existent values
     if (
@@ -56,17 +58,19 @@ export default function InputEntities({
     handleChange({
       target: {
         name,
-        value: [...value, target.value],
+        value: [...value, { entity: target.value }],
       },
     } as unknown as React.ChangeEvent<HTMLInputElement>);
     target.value = "";
   }
 
-  function handleRemoveItem(item: string): void {
+  function handleRemoveItem(itemToRemove: EntitySetting): void {
     handleChange({
       target: {
         name,
-        value: value.filter((option) => option !== item),
+        value: value.filter(
+          (item: EntitySetting) => item.entity !== itemToRemove.entity,
+        ),
       },
     } as unknown as React.ChangeEvent<HTMLInputElement>);
   }
@@ -97,15 +101,15 @@ export default function InputEntities({
         </datalist>
       </div>
       <div className="mt-2 flex w-full flex-wrap gap-2">
-        {value.map((option: string) => (
+        {value.map((item: EntitySetting) => (
           <div
-            key={option}
+            key={item.entity}
             className="flex items-center rounded-full bg-gray-700 py-1 pl-3 pr-2 text-gray-100"
           >
-            <span>{option}</span>
+            <span>{item.entity}</span>
             <button
               className="ml-2 text-gray-300 hover:text-gray-100"
-              onClick={() => handleRemoveItem(option)}
+              onClick={() => handleRemoveItem(item)}
             >
               <svg
                 className="h-4 w-4 fill-current"

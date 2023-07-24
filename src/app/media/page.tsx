@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 
+import type { EntitySetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
@@ -20,18 +21,19 @@ export default function Media() {
     )
       return [];
     return settings.music?.entities.map(
-      (entity: string): ListItem => ({
-        key: entity,
+      (item: EntitySetting): ListItem => ({
+        key: item.entity,
         type: ListItemType.Entity,
         name:
-          homeAssistant.entities?.[entity]?.attributes?.friendly_name ?? entity,
+          homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
+          item.entity,
         icon: <SpeakerWaveIcon className="h-6 w-6" />,
         onClick: () => {
           homeAssistant.client?.callService(
             "media_player",
-            entities[entity].state === "off" ? "turn_on" : "turn_off",
+            entities[item.entity].state === "off" ? "turn_on" : "turn_off",
             {
-              entity_id: entity,
+              entity_id: item.entity,
             },
           );
         },
