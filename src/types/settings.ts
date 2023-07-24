@@ -4,7 +4,6 @@ export interface Settings {
   music: MusicSettings;
   lights: LightSettings;
   switches: SwitchSettings;
-
 }
 
 export interface HomeAssistantConfig {
@@ -35,4 +34,3 @@ export interface EntitySetting {
 export interface TVSetting extends EntitySetting {
   macAddress?: string;
 }
-
