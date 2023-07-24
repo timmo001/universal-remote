@@ -14,17 +14,22 @@ export const defaultSettings: Settings = {
   tv: { entities: [] },
   music: { entities: [] },
   lights: { entities: [] },
+  switches: { entities: [] },
 };
 
 function getSettings(): Settings {
+  const result = defaultSettings;
   try {
-    if (!localStorage) return defaultSettings;
+    if (!localStorage) return result;
     const settings = localStorage.getItem("settings");
-    if (!settings) return defaultSettings;
-    return JSON.parse(settings) as Settings;
+    if (!settings) return result;
+    return {
+      ...result,
+      ...(JSON.parse(settings) as Settings),
+    };
   } catch (e) {
     console.error(e);
-    return defaultSettings;
+    return result;
   }
 }
 
