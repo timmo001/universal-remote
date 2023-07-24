@@ -17,9 +17,9 @@ const items: Array<ListItem> = [
     icon: <TvIcon className="h-6 w-6 text-gray-400" />,
   },
   {
-    key: "music",
-    name: "Music",
-    url: "/music",
+    key: "media",
+    name: "Media",
+    url: "/media",
     icon: <MusicalNoteIcon className="h-6 w-6 text-gray-400" />,
   },
   {

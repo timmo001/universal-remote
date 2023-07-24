@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 
 import type { ListItem } from "@/types/list";
@@ -7,7 +7,7 @@ import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
 
-export default function Lights() {
+export default function Media() {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
