@@ -1,6 +1,7 @@
 "use client";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter } from "next/navigation";
+import { mdiChevronLeft } from "@mdi/js";
+import Icon from "@mdi/react";
 
 export const pageMap: { [path: string]: string } = {
   "/": "Home",
@@ -23,7 +24,7 @@ export default function Header() {
             router.back();
           }}
         >
-          <ChevronLeftIcon className="h-6 w-6 text-gray-400" />
+          <Icon title="Switches" size={1} path={mdiChevronLeft} />
         </button>
       )}
       <h2 className="text-2xl font-bold">{pageMap[pathname]}</h2>

@@ -1,6 +1,7 @@
 "use client";
 import { useMemo } from "react";
-import { LightBulbIcon } from "@heroicons/react/24/outline";
+import { mdiLightbulbOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 import type { EntitySetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
@@ -20,21 +21,23 @@ export default function Lights() {
       settings.lights.entities.length < 1
     )
       return [];
-    return settings.lights?.entities.map(
-      (item: EntitySetting): ListItem => ({
+    return settings.lights?.entities.map((item: EntitySetting): ListItem => {
+      const name =
+        homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
+        item.entity;
+
+      return {
         key: item.entity,
         type: ListItemType.Entity,
-        name:
-          homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
-          item.entity,
-        icon: <LightBulbIcon className="h-6 w-6" />,
+        name: name,
+        icon: <Icon title={name} size={1} path={mdiLightbulbOutline} />,
         onClick: () => {
           homeAssistant.client?.callService("light", "toggle", {
             entity_id: item.entity,
           });
         },
-      }),
-    );
+      };
+    });
   }, [
     homeAssistant.client,
     homeAssistant.entities,

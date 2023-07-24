@@ -1,6 +1,8 @@
 "use client";
 import type { HassEntity } from "home-assistant-js-websocket";
 import { ChangeEventHandler, KeyboardEvent, useMemo } from "react";
+import { mdiCloseCircle } from "@mdi/js";
+import Icon from "@mdi/react";
 
 import type { EntitySetting } from "@/types/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
@@ -111,17 +113,7 @@ export default function InputEntities({
               className="ml-2 text-gray-300 hover:text-gray-100"
               onClick={() => handleRemoveItem(item)}
             >
-              <svg
-                className="h-4 w-4 fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0zm4.293 11.707a1 1 0 11-1.414 1.414L10 11.414l-2.879 2.879a1 1 0 11-1.414-1.414L8.586 10l-2.879-2.879a1 1 0 111.414-1.414L10 8.586l2.879-2.879a1 1 0 111.414 1.414L11.414 10l2.879 2.879z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <Icon title="Remove" size={1} path={mdiCloseCircle} />
             </button>
           </div>
         ))}

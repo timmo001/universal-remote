@@ -1,28 +1,34 @@
 "use client";
 import { MouseEvent, MouseEventHandler } from "react";
-import {
-  ArrowUturnLeftIcon,
-  BackwardIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-  Cog6ToothIcon,
-  ForwardIcon,
-  HomeIcon,
-  InformationCircleIcon,
-  MinusIcon,
-  PauseIcon,
-  PlayIcon,
-  PlusIcon,
-  PowerIcon,
-  SpeakerXMarkIcon,
-  StopIcon,
-} from "@heroicons/react/24/outline";
+import Icon from "@mdi/react";
 
 import type { TVSetting } from "@/types/settings";
 import { useSettings } from "@/providers/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
+import {
+  mdiArrowLeft,
+  mdiArrowLeftCircle,
+  mdiArrowLeftCircleOutline,
+  mdiChevronDown,
+  mdiChevronLeft,
+  mdiChevronRight,
+  mdiChevronUp,
+  mdiDoorOpen,
+  mdiFastForward,
+  mdiHomeOutline,
+  mdiInformationOutline,
+  mdiMenu,
+  mdiMinus,
+  mdiPause,
+  mdiPlay,
+  mdiPlayOutline,
+  mdiPlus,
+  mdiPower,
+  mdiRewind,
+  mdiStop,
+  mdiTelevisionGuide,
+  mdiVolumeOff,
+} from "@mdi/js";
 
 function Button({
   name,
@@ -113,8 +119,8 @@ export default function Remote({ tv }: { tv: TVSetting }) {
     <>
       <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
         <Button
-          name="power"
-          icon={<PowerIcon className="h-6 w-6 text-red-600" />}
+          name="POWER"
+          icon={<Icon title="POWER" size={1} path={mdiPower} color="red" />}
           onClick={handlePowerClick}
         />
       </section>
@@ -129,7 +135,7 @@ export default function Remote({ tv }: { tv: TVSetting }) {
         ))}
         <Button
           name="INFO"
-          icon={<InformationCircleIcon className="h-6 w-6" />}
+          icon={<Icon title="INFO" size={1} path={mdiInformationOutline} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -139,57 +145,57 @@ export default function Remote({ tv }: { tv: TVSetting }) {
         />
         <Button
           name="GUIDE"
-          icon={<span className="text-1xl">GUIDE</span>}
+          icon={<Icon title="GUIDE" size={1} path={mdiTelevisionGuide} />}
           onClick={handleButtonClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
         <Button
           name="VOLUMEUP"
-          icon={<PlusIcon className="h-6 w-6" />}
+          icon={<Icon title="VOLUMEUP" size={1} path={mdiPlus} />}
           onClick={handleButtonClick}
         />
         <Button
           name="MUTE"
-          icon={<SpeakerXMarkIcon className="h-6 w-6" />}
+          icon={<Icon title="MUTE" size={1} path={mdiVolumeOff} />}
           onClick={handleButtonClick}
         />
         <Button
           name="CHANNELUP"
-          icon={<ChevronUpIcon className="h-6 w-6" />}
+          icon={<Icon title="CHANNELUP" size={1} path={mdiChevronUp} />}
           onClick={handleButtonClick}
         />
         <Button
           name="VOLUMEDOWN"
-          icon={<MinusIcon className="h-6 w-6" />}
+          icon={<Icon title="VOLUMEDOWN" size={1} path={mdiMinus} />}
           onClick={handleButtonClick}
         />
         <div />
         <Button
           name="CHANNELDOWN"
-          icon={<ChevronDownIcon className="h-6 w-6" />}
+          icon={<Icon title="CHANNELDOWN" size={1} path={mdiChevronDown} />}
           onClick={handleButtonClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
         <Button
           name="HOME"
-          icon={<HomeIcon className="h-6 w-6" />}
+          icon={<Icon title="HOME" size={1} path={mdiHomeOutline} />}
           onClick={handleButtonClick}
         />
         <Button
           name="UP"
-          icon={<ChevronUpIcon className="h-6 w-6" />}
+          icon={<Icon title="UP" size={1} path={mdiChevronUp} />}
           onClick={handleButtonClick}
         />
         <Button
           name="MENU"
-          icon={<Cog6ToothIcon className="h-6 w-6" />}
+          icon={<Icon title="MENU" size={1} path={mdiMenu} />}
           onClick={handleButtonClick}
         />
         <Button
           name="LEFT"
-          icon={<ChevronLeftIcon className="h-6 w-6" />}
+          icon={<Icon title="LEFT" size={1} path={mdiChevronLeft} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -199,17 +205,17 @@ export default function Remote({ tv }: { tv: TVSetting }) {
         />
         <Button
           name="RIGHT"
-          icon={<ChevronRightIcon className="h-6 w-6" />}
+          icon={<Icon title="RIGHT" size={1} path={mdiChevronRight} />}
           onClick={handleButtonClick}
         />
         <Button
           name="BACK"
-          icon={<ArrowUturnLeftIcon className="h-6 w-6" />}
+          icon={<Icon title="BACK" size={1} path={mdiArrowLeft} />}
           onClick={handleButtonClick}
         />
         <Button
           name="DOWN"
-          icon={<ChevronDownIcon className="h-6 w-6" />}
+          icon={<Icon title="DOWN" size={1} path={mdiChevronDown} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -221,29 +227,29 @@ export default function Remote({ tv }: { tv: TVSetting }) {
       <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
         <Button
           name="media.controls/rewind"
-          icon={<BackwardIcon className="h-6 w-6" />}
+          icon={<Icon title="REWIND" size={1} path={mdiRewind} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/play"
-          icon={<PlayIcon className="h-6 w-6" />}
+          icon={<Icon title="PLAY" size={1} path={mdiPlayOutline} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/pause"
-          icon={<PauseIcon className="h-6 w-6" />}
+          icon={<Icon title="PAUSE" size={1} path={mdiPause} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/fastForward"
-          icon={<ForwardIcon className="h-6 w-6" />}
+          icon={<Icon title="FASTFORWARD" size={1} path={mdiFastForward} />}
           onClick={handleCommandClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
         <Button
           name="media.controls/stop"
-          icon={<StopIcon className="h-6 w-6" />}
+          icon={<Icon title="STOP" size={1} path={mdiStop} />}
           onClick={handleCommandClick}
         />
         <Button

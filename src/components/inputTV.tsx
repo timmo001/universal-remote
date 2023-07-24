@@ -1,6 +1,7 @@
 "use client";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { PlusIcon, TvIcon } from "@heroicons/react/24/outline";
+import { ChangeEvent, useState } from "react";
+import { mdiCloseCircle, mdiPlus, mdiTelevision } from "@mdi/js";
+import Icon from "@mdi/react";
 import Modal from "react-modal";
 
 import type { TVSetting } from "@/types/settings";
@@ -77,7 +78,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
     <>
       <InputLabel
         label="TV Entities"
-        icon={<TvIcon className="h-6 w-6 text-gray-200" />}
+        icon={<Icon title="TV" size={1} path={mdiTelevision} />}
       />
       <div className="mt-2 flex w-full flex-wrap gap-2">
         {tvs.map((tv: TVSetting, index: number) => (
@@ -101,17 +102,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
               className="ml-2 text-gray-300 hover:text-gray-100"
               onClick={() => handleRemoveItem(index)}
             >
-              <svg
-                className="h-4 w-4 fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0zm4.293 11.707a1 1 0 11-1.414 1.414L10 11.414l-2.879 2.879a1 1 0 11-1.414-1.414L8.586 10l-2.879-2.879a1 1 0 111.414-1.414L10 8.586l2.879-2.879a1 1 0 111.414 1.414L11.414 10l2.879 2.879z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <Icon title="Remove" size={1} path={mdiCloseCircle} />
             </button>
           </div>
         ))}
@@ -127,7 +118,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
               });
             }}
           >
-            <PlusIcon className="h-4 w-4 fill-current" />
+            <Icon title="Add" size={1} path={mdiPlus} />
           </button>
         </div>
       </div>
@@ -144,7 +135,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
             <form className="flex flex-col gap-4">
               <InputLabel
                 label="TV"
-                icon={<TvIcon className="h-6 w-6 text-gray-200" />}
+                icon={<Icon title="TV" size={1} path={mdiTelevision} />}
               />
               <InputEntity
                 name="entity"

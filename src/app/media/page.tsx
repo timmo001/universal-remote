@@ -1,6 +1,7 @@
 "use client";
 import { useMemo } from "react";
-import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
+import { mdiMusicNoteOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 import type { EntitySetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
@@ -20,14 +21,18 @@ export default function Media() {
       settings.music.entities.length < 1
     )
       return [];
-    return settings.music?.entities.map(
-      (item: EntitySetting): ListItem => ({
+    return settings.music?.entities.map((item: EntitySetting): ListItem => {
+      const name =
+        homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
+        item.entity;
+
+      return {
         key: item.entity,
         type: ListItemType.Entity,
         name:
           homeAssistant.entities?.[item.entity]?.attributes?.friendly_name ??
           item.entity,
-        icon: <SpeakerWaveIcon className="h-6 w-6" />,
+        icon: <Icon title={name} size={1} path={mdiMusicNoteOutline} />,
         onClick: () => {
           homeAssistant.client?.callService(
             "media_player",
@@ -37,8 +42,8 @@ export default function Media() {
             },
           );
         },
-      }),
-    );
+      };
+    });
   }, [homeAssistant.client, homeAssistant.entities, settings?.music?.entities]);
 
   if (!settings?.music?.entities || settings.music.entities.length < 1)

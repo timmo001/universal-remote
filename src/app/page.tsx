@@ -1,10 +1,12 @@
 "use server";
 import {
-  LightBulbIcon,
-  CogIcon,
-  MusicalNoteIcon,
-  TvIcon,
-} from "@heroicons/react/24/outline";
+  mdiCogOutline,
+  mdiLightSwitch,
+  mdiLightbulbOutline,
+  mdiMusicNoteOutline,
+  mdiTelevision,
+} from "@mdi/js";
+import Icon from "@mdi/react";
 
 import { type ListItem, ListItemType } from "@/types/list";
 import List from "@/components/list";
@@ -15,35 +17,35 @@ const items: Array<ListItem> = [
     type: ListItemType.Link,
     name: "TV",
     url: "/tv",
-    icon: <TvIcon className="h-6 w-6 text-gray-400" />,
+    icon: <Icon title="TV" size={1} path={mdiTelevision} />,
   },
   {
     key: "media",
     type: ListItemType.Link,
     name: "Media",
     url: "/media",
-    icon: <MusicalNoteIcon className="h-6 w-6 text-gray-400" />,
+    icon: <Icon title="Media" size={1} path={mdiMusicNoteOutline} />,
   },
   {
     key: "lights",
     type: ListItemType.Link,
     name: "Lights",
     url: "/lights",
-    icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
+    icon: <Icon title="Lights" size={1} path={mdiLightbulbOutline} />,
   },
   {
     key: "switches",
     type: ListItemType.Link,
     name: "Switches",
     url: "/switches",
-    icon: <LightBulbIcon className="h-6 w-6 text-gray-400" />,
+    icon: <Icon title="Switches" size={1} path={mdiLightSwitch} />,
   },
   {
     key: "settings",
     type: ListItemType.Link,
     name: "Settings",
     url: "/settings",
-    icon: <CogIcon className="h-6 w-6 text-gray-400" />,
+    icon: <Icon title="Settings" size={1} path={mdiCogOutline} />,
   },
 ];
 

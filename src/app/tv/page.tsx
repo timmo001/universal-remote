@@ -1,20 +1,21 @@
 "use client";
 import { useMemo } from "react";
-import { TvIcon } from "@heroicons/react/24/outline";
+import { mdiTelevision } from "@mdi/js";
+import Icon from "@mdi/react";
 
-import { ListItemType, type ListItem } from "@/types/list";
+import type { TVSetting } from "@/types/settings";
+import { type ListItem, ListItemType } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
 import Remote from "@/components/remote";
-import { TVSetting } from "@/types/settings";
 
 const defaultSources: Array<ListItem> = [
   {
     key: "tv",
     type: ListItemType.Source,
     name: "TV",
-    icon: <TvIcon className="h-6 w-6" />,
+    icon: <Icon title="TV" size={1} path={mdiTelevision} />,
   },
 ];
 
@@ -45,7 +46,7 @@ export default function TV() {
         key: source,
         type: ListItemType.Source,
         name: source,
-        icon: <TvIcon className="h-6 w-6" />,
+        icon: <Icon title={source} size={1} path={mdiTelevision} />,
         onClick: () => {
           homeAssistant.client?.callService("media_player", "select_source", {
             entity_id: tv.entity,

@@ -1,7 +1,8 @@
 "use client";
 import { ChangeEvent, useEffect, useState } from "react";
-import { CodeBracketIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import { mdiLink, mdiLockOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 import { useSettings } from "@/providers/settings";
 import InputText from "@/components/inputText";
@@ -57,14 +58,14 @@ export default function Setup() {
         <InputText
           name="homeAssistant.url"
           label="URL"
-          icon={<HomeIcon className="h-6 w-6 text-gray-200" />}
+          icon={<Icon title="URL" size={1} path={mdiLink} />}
           value={homeAssistantUrl}
           handleChange={handleChange}
         />
         <InputText
           name="homeAssistant.accessToken"
           label="Long Lived Access Token"
-          icon={<CodeBracketIcon className="h-6 w-6 text-gray-200" />}
+          icon={<Icon title="URL" size={1} path={mdiLockOutline} />}
           value={homeAssistantAccessToken}
           handleChange={handleChange}
         />

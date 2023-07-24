@@ -1,6 +1,11 @@
 "use client";
 import { ChangeEvent } from "react";
-import { LightBulbIcon, MusicalNoteIcon } from "@heroicons/react/24/outline";
+import {
+  mdiLightSwitch,
+  mdiLightbulbOutline,
+  mdiMusicNoteOutline,
+} from "@mdi/js";
+import Icon from "@mdi/react";
 import Link from "next/link";
 
 import { useSettings } from "@/providers/settings";
@@ -39,7 +44,9 @@ export default function Settings() {
         <InputEntities
           name="music.entities"
           label="Music Entities"
-          icon={<MusicalNoteIcon className="h-6 w-6 text-gray-200" />}
+          icon={
+            <Icon title="Music Entities" size={1} path={mdiMusicNoteOutline} />
+          }
           filters={["media_player"]}
           value={settings?.music?.entities || []}
           handleChange={handleChange}
@@ -47,7 +54,9 @@ export default function Settings() {
         <InputEntities
           name="lights.entities"
           label="Light Entities"
-          icon={<LightBulbIcon className="h-6 w-6 text-gray-200" />}
+          icon={
+            <Icon title="Lights Entities" size={1} path={mdiLightbulbOutline} />
+          }
           filters={["light"]}
           value={settings?.lights?.entities || []}
           handleChange={handleChange}
@@ -55,7 +64,7 @@ export default function Settings() {
         <InputEntities
           name="switches.entities"
           label="Switch Entities"
-          icon={<LightBulbIcon className="h-6 w-6 text-gray-200" />}
+          icon={<Icon title="Switches" size={1} path={mdiLightSwitch} />}
           filters={["switch"]}
           value={settings?.switches?.entities || []}
           handleChange={handleChange}
