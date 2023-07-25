@@ -7,7 +7,7 @@ import { TVType, type TVSetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
-import LGWebOSRemote from "@/components/lgWebOSRemote";
+import LGWebOSRemote from "@/components/remoteLGWebOS";
 import List from "@/components/list";
 
 export default function TV() {

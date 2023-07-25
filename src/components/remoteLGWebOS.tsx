@@ -7,20 +7,16 @@ import { useSettings } from "@/providers/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import {
   mdiArrowLeft,
-  mdiArrowLeftCircle,
-  mdiArrowLeftCircleOutline,
   mdiChevronDown,
   mdiChevronLeft,
   mdiChevronRight,
   mdiChevronUp,
-  mdiDoorOpen,
   mdiFastForward,
   mdiHomeOutline,
   mdiInformationOutline,
   mdiMenu,
   mdiMinus,
   mdiPause,
-  mdiPlay,
   mdiPlayOutline,
   mdiPlus,
   mdiPower,
@@ -46,7 +42,7 @@ function Button({
   );
 }
 
-export default function LGWebOSRemote({ tv }: { tv: TVSetting }) {
+export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
