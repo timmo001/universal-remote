@@ -5,6 +5,9 @@
     },
     {
       "pattern": "^contact@timmo"
+    },
+    {
+      "pattern": "^https://www.contributor-covenant.org"
     }
   ],
   "retryOn429": true
