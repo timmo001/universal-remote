@@ -178,7 +178,9 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
         />
         <Button
           name="MediaFastForward"
-          icon={<Icon title="MediaFastForward" size={1.2} path={mdiFastForward} />}
+          icon={
+            <Icon title="MediaFastForward" size={1.2} path={mdiFastForward} />
+          }
           onClick={handleButtonClick}
         />
       </section>
