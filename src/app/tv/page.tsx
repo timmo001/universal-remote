@@ -10,15 +10,6 @@ import { useSettings } from "@/providers/settings";
 import List from "@/components/list";
 import Remote from "@/components/remote";
 
-const defaultSources: Array<ListItem> = [
-  {
-    key: "tv",
-    type: ListItemType.Source,
-    name: "TV",
-    icon: <Icon title="TV" size={1} path={mdiTelevision} />,
-  },
-];
-
 export default function TV() {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
@@ -36,10 +27,10 @@ export default function TV() {
       !settings?.tv?.entities ||
       settings.tv.entities.length < 1
     )
-      return defaultSources;
+      return [];
 
     const source_list = entities[tv.entity].attributes.source_list;
-    if (!source_list) return defaultSources;
+    if (!source_list) return [];
 
     return source_list.map(
       (source: string): ListItem => ({
