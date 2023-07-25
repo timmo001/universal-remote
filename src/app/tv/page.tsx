@@ -7,8 +7,9 @@ import { TVType, type TVSetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
-import LGWebOSRemote from "@/components/remoteLGWebOS";
 import List from "@/components/list";
+import RemoteLGHorizon from "@/components/remoteLGHorizon";
+import RemoteLGWebOS from "@/components/remoteLGWebOS";
 
 export default function TV() {
   const { settings } = useSettings();
@@ -90,7 +91,11 @@ export default function TV() {
   return (
     <>
       <List items={tvSources} />
-      {tv.type === TVType.LGWebOS && <LGWebOSRemote tv={tv} />}
+      {tv.type === TVType.LGWebOS ? (
+        <RemoteLGWebOS tv={tv} />
+      ) : tv.type === TVType.LGHorizon ? (
+        <RemoteLGHorizon tv={tv} />
+      ) : null}
       <h2 className="mb-2 text-2xl font-bold">Sources</h2>
       <List items={sources} />
     </>

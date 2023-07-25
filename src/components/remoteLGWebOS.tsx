@@ -17,7 +17,7 @@ import {
   mdiMenu,
   mdiMinus,
   mdiPause,
-  mdiPlayOutline,
+  mdiPlay,
   mdiPlus,
   mdiPower,
   mdiRewind,
@@ -116,7 +116,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
       <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
         <Button
           name="POWER"
-          icon={<Icon title="POWER" size={1} path={mdiPower} color="red" />}
+          icon={<Icon title="POWER" size={1.2} path={mdiPower} color="red" />}
           onClick={handlePowerClick}
         />
       </section>
@@ -131,7 +131,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
         ))}
         <Button
           name="INFO"
-          icon={<Icon title="INFO" size={1} path={mdiInformationOutline} />}
+          icon={<Icon title="INFO" size={1.2} path={mdiInformationOutline} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -141,57 +141,57 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
         />
         <Button
           name="GUIDE"
-          icon={<Icon title="GUIDE" size={1} path={mdiTelevisionGuide} />}
+          icon={<Icon title="GUIDE" size={1.2} path={mdiTelevisionGuide} />}
           onClick={handleButtonClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
         <Button
           name="VOLUMEUP"
-          icon={<Icon title="VOLUMEUP" size={1} path={mdiPlus} />}
+          icon={<Icon title="VOLUMEUP" size={1.2} path={mdiPlus} />}
           onClick={handleButtonClick}
         />
         <Button
           name="MUTE"
-          icon={<Icon title="MUTE" size={1} path={mdiVolumeOff} />}
+          icon={<Icon title="MUTE" size={1.2} path={mdiVolumeOff} />}
           onClick={handleButtonClick}
         />
         <Button
           name="CHANNELUP"
-          icon={<Icon title="CHANNELUP" size={1} path={mdiChevronUp} />}
+          icon={<Icon title="CHANNELUP" size={1.2} path={mdiChevronUp} />}
           onClick={handleButtonClick}
         />
         <Button
           name="VOLUMEDOWN"
-          icon={<Icon title="VOLUMEDOWN" size={1} path={mdiMinus} />}
+          icon={<Icon title="VOLUMEDOWN" size={1.2} path={mdiMinus} />}
           onClick={handleButtonClick}
         />
         <div />
         <Button
           name="CHANNELDOWN"
-          icon={<Icon title="CHANNELDOWN" size={1} path={mdiChevronDown} />}
+          icon={<Icon title="CHANNELDOWN" size={1.2} path={mdiChevronDown} />}
           onClick={handleButtonClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
         <Button
           name="HOME"
-          icon={<Icon title="HOME" size={1} path={mdiHomeOutline} />}
+          icon={<Icon title="HOME" size={1.2} path={mdiHomeOutline} />}
           onClick={handleButtonClick}
         />
         <Button
           name="UP"
-          icon={<Icon title="UP" size={1} path={mdiChevronUp} />}
+          icon={<Icon title="UP" size={1.2} path={mdiChevronUp} />}
           onClick={handleButtonClick}
         />
         <Button
           name="MENU"
-          icon={<Icon title="MENU" size={1} path={mdiMenu} />}
+          icon={<Icon title="MENU" size={1.2} path={mdiMenu} />}
           onClick={handleButtonClick}
         />
         <Button
           name="LEFT"
-          icon={<Icon title="LEFT" size={1} path={mdiChevronLeft} />}
+          icon={<Icon title="LEFT" size={1.2} path={mdiChevronLeft} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -201,17 +201,17 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
         />
         <Button
           name="RIGHT"
-          icon={<Icon title="RIGHT" size={1} path={mdiChevronRight} />}
+          icon={<Icon title="RIGHT" size={1.2} path={mdiChevronRight} />}
           onClick={handleButtonClick}
         />
         <Button
           name="BACK"
-          icon={<Icon title="BACK" size={1} path={mdiArrowLeft} />}
+          icon={<Icon title="BACK" size={1.2} path={mdiArrowLeft} />}
           onClick={handleButtonClick}
         />
         <Button
           name="DOWN"
-          icon={<Icon title="DOWN" size={1} path={mdiChevronDown} />}
+          icon={<Icon title="DOWN" size={1.2} path={mdiChevronDown} />}
           onClick={handleButtonClick}
         />
         <Button
@@ -223,29 +223,29 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
       <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
         <Button
           name="media.controls/rewind"
-          icon={<Icon title="REWIND" size={1} path={mdiRewind} />}
+          icon={<Icon title="REWIND" size={1.2} path={mdiRewind} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/play"
-          icon={<Icon title="PLAY" size={1} path={mdiPlayOutline} />}
+          icon={<Icon title="PLAY" size={1.2} path={mdiPlay} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/pause"
-          icon={<Icon title="PAUSE" size={1} path={mdiPause} />}
+          icon={<Icon title="PAUSE" size={1.2} path={mdiPause} />}
           onClick={handleCommandClick}
         />
         <Button
           name="media.controls/fastForward"
-          icon={<Icon title="FASTFORWARD" size={1} path={mdiFastForward} />}
+          icon={<Icon title="FASTFORWARD" size={1.2} path={mdiFastForward} />}
           onClick={handleCommandClick}
         />
       </section>
       <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
         <Button
           name="media.controls/stop"
-          icon={<Icon title="STOP" size={1} path={mdiStop} />}
+          icon={<Icon title="STOP" size={1.2} path={mdiStop} />}
           onClick={handleCommandClick}
         />
         <Button
