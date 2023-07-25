@@ -31,6 +31,12 @@ export interface EntitySetting {
   entity: string;
 }
 
+export enum TVType {
+  LGWebOS = "LGWebOS",
+  LGHorizon = "LGHorizon",
+}
+
 export interface TVSetting extends EntitySetting {
+  type: TVType;
   macAddress?: string;
 }

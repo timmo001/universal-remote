@@ -4,11 +4,12 @@ import { mdiCloseCircle, mdiPlus, mdiTelevision } from "@mdi/js";
 import Icon from "@mdi/react";
 import Modal from "react-modal";
 
-import type { TVSetting } from "@/types/settings";
-import InputText from "@/components/inputText";
+import { TVType, type TVSetting } from "@/types/settings";
+import { useSettings } from "@/providers/settings";
 import InputEntity from "@/components/inputEntity";
 import InputLabel from "@/components/inputLabel";
-import { useSettings } from "@/providers/settings";
+import InputSelect from "@/components/inputSelect";
+import InputText from "@/components/inputText";
 
 interface ItemEditing extends TVSetting {
   index: number;
@@ -54,13 +55,11 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
     const newTvs: Array<TVSetting> = [...tvs];
     if (itemEditing.index === tvs.length) {
       newTvs.push({
-        entity: itemEditing.entity,
-        macAddress: itemEditing.macAddress,
+        ...itemEditing,
       });
     } else {
       newTvs[itemEditing.index] = {
-        entity: itemEditing.entity,
-        macAddress: itemEditing.macAddress,
+        ...itemEditing,
       };
     }
     updateSettings({
@@ -73,6 +72,8 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
 
     handleModalClose();
   }
+
+  console.log("itemEditing", itemEditing);
 
   return (
     <>
@@ -91,8 +92,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
               onClick={() => {
                 setItemEditing({
                   index,
-                  entity: tv.entity,
-                  macAddress: tv.macAddress,
+                  ...tv,
                 });
               }}
             >
@@ -113,6 +113,7 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
             onClick={() => {
               setItemEditing({
                 entity: "",
+                type: TVType.LGWebOS,
                 macAddress: "",
                 index: tvs.length,
               });
@@ -141,15 +142,27 @@ export default function InputTV({ value: tvs }: { value: Array<TVSetting> }) {
                 name="entity"
                 label="Entity"
                 filter={"media_player"}
-                value={itemEditing.entity || ""}
+                value={itemEditing.entity}
                 handleChange={handleChangeItem}
               />
-              <InputText
-                name="macAddress"
-                label="MAC Address"
-                value={itemEditing.macAddress || ""}
+              <InputSelect
+                name="type"
+                label="Type"
+                options={[
+                  [TVType.LGWebOS, "LG WebOS"],
+                  [TVType.LGHorizon, "LG Horizon (Virgin 360 / Ziggo)"],
+                ]}
+                value={itemEditing.type}
                 handleChange={handleChangeItem}
               />
+              {itemEditing.type === TVType.LGWebOS && (
+                <InputText
+                  name="macAddress"
+                  label="MAC Address"
+                  value={itemEditing.macAddress || ""}
+                  handleChange={handleChangeItem}
+                />
+              )}
             </form>
           )}
           <div className="mt-4 flex flex-row justify-end gap-2">
