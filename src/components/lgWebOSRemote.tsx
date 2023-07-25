@@ -46,7 +46,7 @@ function Button({
   );
 }
 
-export default function Remote({ tv }: { tv: TVSetting }) {
+export default function LGWebOSRemote({ tv }: { tv: TVSetting }) {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 

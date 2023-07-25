@@ -11,5 +11,6 @@ export interface ListItem {
   url?: string;
   icon: JSX.Element;
   iconColor?: string;
+  selected?: boolean;
   onClick?: () => void;
 }

@@ -37,39 +37,63 @@ export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
   return (
     <section className="flex min-w-full flex-col items-center justify-center">
       <ul className="selectable-list flex min-w-full flex-col gap-3 px-2">
-        {items.map(({ key, name, url, icon, iconColor, onClick }: ListItem) => {
-          const isClassName =
-            typeof iconColor === "string" && iconColor.startsWith("text-");
-          return url ? (
-            <Link
-              key={key}
-              href={url}
-              className="flex flex-row items-center gap-3"
-            >
-              <span
-                className={isClassName ? iconColor : undefined}
-                style={{ color: !isClassName ? iconColor : undefined }}
+        {items.map(
+          ({
+            key,
+            name,
+            url,
+            icon,
+            iconColor,
+            selected,
+            onClick,
+          }: ListItem) => {
+            const isClassName =
+              typeof iconColor === "string" && iconColor.startsWith("text-");
+            return url ? (
+              <Link
+                key={key}
+                href={url}
+                className="flex flex-row items-center gap-3"
               >
-                {icon}
-              </span>
-              <span>{name}</span>
-            </Link>
-          ) : (
-            <a
-              key={key}
-              className="flex cursor-pointer flex-row items-center gap-3"
-              onClick={onClick}
-            >
-              <span
-                className={isClassName ? iconColor : undefined}
-                style={{ color: !isClassName ? iconColor : undefined }}
+                <span
+                  className={
+                    selected
+                      ? "text-purple-400"
+                      : isClassName
+                      ? iconColor
+                      : undefined
+                  }
+                  style={{ color: !isClassName ? iconColor : undefined }}
+                >
+                  {icon}
+                </span>
+                <span>{name}</span>
+              </Link>
+            ) : (
+              <a
+                key={key}
+                className={`flex ${
+                  selected ? "cursor-default" : "cursor-pointer"
+                } flex-row items-center gap-3`}
+                onClick={onClick}
               >
-                {icon}
-              </span>
-              <span>{name}</span>
-            </a>
-          );
-        })}
+                <span
+                  className={
+                    selected
+                      ? "text-purple-400"
+                      : isClassName
+                      ? iconColor
+                      : undefined
+                  }
+                  style={{ color: !isClassName ? iconColor : undefined }}
+                >
+                  {icon}
+                </span>
+                <span>{name}</span>
+              </a>
+            );
+          },
+        )}
       </ul>
     </section>
   );

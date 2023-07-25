@@ -1,23 +1,47 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { mdiTelevision } from "@mdi/js";
 import Icon from "@mdi/react";
 
-import type { TVSetting } from "@/types/settings";
+import { TVType, type TVSetting } from "@/types/settings";
 import { type ListItem, ListItemType } from "@/types/list";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import { useSettings } from "@/providers/settings";
+import LGWebOSRemote from "@/components/lgWebOSRemote";
 import List from "@/components/list";
-import Remote from "@/components/remote";
 
 export default function TV() {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
-  const tv = useMemo<TVSetting | null>(() => {
-    if (!settings?.tv?.entities || settings.tv.entities.length < 1) return null;
-    return settings.tv.entities[0];
+  const [tv, setTv] = useState<TVSetting>();
+
+  useEffect(() => {
+    if (!settings?.tv?.entities || settings.tv.entities.length < 1) return;
+    setTv(settings.tv.entities[0]);
   }, [settings?.tv?.entities]);
+
+  const tvSources = useMemo<Array<ListItem>>(() => {
+    const entities = homeAssistant.entities;
+    if (!settings?.tv?.entities || settings.tv.entities.length < 1) return [];
+
+    return settings.tv.entities.map((value: TVSetting): ListItem => {
+      const name = entities
+        ? entities[value.entity].attributes.friendly_name || value.entity
+        : value.entity;
+
+      return {
+        key: value.entity,
+        type: ListItemType.Source,
+        name: name,
+        icon: <Icon title={name} size={1} path={mdiTelevision} />,
+        selected: value.entity === tv?.entity,
+        onClick: () => {
+          setTv(value);
+        },
+      };
+    });
+  }, [tv, homeAssistant.entities, settings?.tv?.entities]);
 
   const sources = useMemo<Array<ListItem>>(() => {
     const entities = homeAssistant.entities;
@@ -65,7 +89,8 @@ export default function TV() {
 
   return (
     <>
-      <Remote tv={tv} />
+      <List items={tvSources} />
+      {tv.type === TVType.LGWebOS && <LGWebOSRemote tv={tv} />}
       <h2 className="mb-2 text-2xl font-bold">Sources</h2>
       <List items={sources} />
     </>
