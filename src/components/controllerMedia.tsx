@@ -45,6 +45,16 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
     return entity.attributes.is_volume_muted;
   }, [entity]);
 
+  const position = useMemo<number>(() => {
+    if (!entity?.attributes?.media_position) return 0;
+    return entity.attributes.media_position;
+  }, [entity]);
+
+  const duration = useMemo<number>(() => {
+    if (!entity?.attributes?.media_duration) return 0;
+    return entity.attributes.media_duration;
+  }, [entity]);
+
   if (!entity)
     return (
       <>
@@ -82,6 +92,51 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
           <h5 className="text-xs font-medium">
             {entity.attributes?.media_album_name}
           </h5>
+          <div className="flex-1" />
+          <div className="flex-1" />
+          <div className="flex w-full flex-row items-center gap-x-2 pe-2 ps-5">
+            <button
+              className="rounded-full p-2"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault();
+                homeAssistant.client?.callService(
+                  "media_player",
+                  "volume_mute",
+                  {
+                    entity_id: media.entity,
+                    is_volume_muted: !isMuted,
+                  },
+                );
+              }}
+            >
+              <Icon
+                size={1}
+                title="Volume"
+                path={isMuted ? mdiVolumeMute : mdiVolumeHigh}
+              />
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={volume}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                e.preventDefault();
+                homeAssistant.client?.callService(
+                  "media_player",
+                  "volume_set",
+                  {
+                    entity_id: media.entity,
+                    volume_level: Number(e.currentTarget.value) / 100,
+                  },
+                );
+              }}
+              className="h-2 w-full appearance-none rounded-full"
+              style={{
+                background: `linear-gradient(to right, rgb(var(--green-rgb)) ${volume}%, rgb(var(--foreground-dimmed-rgb)) ${volume}%)`,
+              }}
+            />
+          </div>
           <div className="flex-1" />
           <div className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
             <button
@@ -131,38 +186,28 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
         </section>
       </div>
       <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
-        <div className="flex w-full flex-row items-center gap-x-2">
-          <button
-            className="rounded-full p-2"
-            onClick={(e: MouseEvent) => {
-              e.preventDefault();
-              homeAssistant.client?.callService("media_player", "volume_mute", {
-                entity_id: media.entity,
-                is_volume_muted: !isMuted,
-              });
-            }}
-          >
-            <Icon
-              size={1}
-              title="Volume"
-              path={isMuted ? mdiVolumeMute : mdiVolumeHigh}
-            />
-          </button>
+        <div className="flex flex-row items-center gap-x-2">
           <input
             type="range"
             min="0"
-            max="100"
-            value={volume}
+            max={duration}
+            value={position}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               e.preventDefault();
-              homeAssistant.client?.callService("media_player", "volume_set", {
+              homeAssistant.client?.callService("media_player", "media_seek", {
                 entity_id: media.entity,
-                volume_level: Number(e.currentTarget.value) / 100,
+                seek_position: Number(e.currentTarget.value),
               });
             }}
             className="h-2 w-full appearance-none rounded-full"
             style={{
-              background: `linear-gradient(to right, rgb(var(--green-rgb)) ${volume}%, rgb(var(--background-end-rgb)) ${volume}%)`,
+              background: `linear-gradient(to right, rgb(var(--green-rgb)) ${(
+                (position / duration) *
+                100
+              ).toFixed(2)}%, rgb(var(--foreground-dimmed-rgb)) ${(
+                (position / duration) *
+                100
+              ).toFixed(2)}%)`,
             }}
           />
         </div>
