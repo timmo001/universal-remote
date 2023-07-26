@@ -7,6 +7,14 @@
   "theme_color": "#673AB7",
   "background_color": "#000000",
   "orientation": "portrait-primary",
+  "lang": "en-GB",
+  "categories": [
+    "entertainment",
+    "home-automation",
+    "lifestyle",
+    "productivity",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
