@@ -40,6 +40,7 @@ export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
         {items.map(
           ({
             key,
+            type,
             name,
             url,
             icon,
@@ -54,6 +55,7 @@ export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
                 key={key}
                 href={url}
                 className="flex flex-row items-center gap-3"
+                replace={type === ListItemType.Source}
               >
                 <span
                   className={

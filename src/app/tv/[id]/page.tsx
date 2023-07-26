@@ -42,9 +42,7 @@ export default function TV({ params }: { params: { id: string } }) {
         name: name,
         icon: <Icon title={name} size={1} path={mdiTelevision} />,
         selected: value.entity === tv?.entity,
-        onClick: () => {
-          setTv(value);
-        },
+        url: `/tv/${value.entity}`,
       };
     });
   }, [tv, homeAssistant.entities, settings?.tv?.entities]);
