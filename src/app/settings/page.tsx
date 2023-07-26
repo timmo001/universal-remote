@@ -42,13 +42,13 @@ export default function Settings() {
         </Link>
         <InputTV value={settings?.tv?.entities || []} />
         <InputEntities
-          name="music.entities"
-          label="Music Entities"
+          name="media.entities"
+          label="Media Entities"
           icon={
-            <Icon title="Music Entities" size={1} path={mdiMusicNoteOutline} />
+            <Icon title="Media Entities" size={1} path={mdiMusicNoteOutline} />
           }
           filters={["media_player"]}
-          value={settings?.music?.entities || []}
+          value={settings?.media?.entities || []}
           handleChange={handleChange}
         />
         <InputEntities

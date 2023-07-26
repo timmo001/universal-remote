@@ -12,7 +12,7 @@ import type { Settings } from "@/types/settings";
 export const defaultSettings: Settings = {
   homeAssistant: {},
   tv: { entities: [] },
-  music: { entities: [] },
+  media: { entities: [] },
   lights: { entities: [] },
   switches: { entities: [] },
 };

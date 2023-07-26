@@ -1,7 +1,7 @@
 export interface Settings {
   homeAssistant: HomeAssistantConfig;
   tv: TvSettings;
-  music: MusicSettings;
+  media: MediaSettings;
   lights: LightSettings;
   switches: SwitchSettings;
 }
@@ -15,7 +15,7 @@ export interface TvSettings {
   entities: Array<TVSetting>;
 }
 
-export interface MusicSettings {
+export interface MediaSettings {
   entities: Array<EntitySetting>;
 }
 
