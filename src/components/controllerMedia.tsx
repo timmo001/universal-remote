@@ -1,5 +1,5 @@
 "use client";
-import { MouseEvent, useMemo } from "react";
+import { ChangeEvent, MouseEvent, useMemo } from "react";
 import Icon from "@mdi/react";
 
 import type { MediaSetting } from "@/types/settings";
@@ -10,15 +10,17 @@ import {
   mdiPlay,
   mdiSkipNext,
   mdiSkipPrevious,
+  mdiVolumeHigh,
+  mdiVolumeMute,
 } from "@mdi/js";
-import { HassEntity } from "home-assistant-js-websocket";
+import { MediaPlayerEntity } from "@/types/homeAssistant/mediaPlayer";
 
 export default function ControllerMedia({ media }: { media: MediaSetting }) {
   const homeAssistant = useHomeAssistant();
 
-  const entity = useMemo<HassEntity | undefined>(() => {
+  const entity = useMemo<MediaPlayerEntity | undefined>(() => {
     if (!media.entity || !homeAssistant.entities) return undefined;
-    return homeAssistant.entities[media.entity];
+    return homeAssistant.entities[media.entity] as MediaPlayerEntity;
   }, [homeAssistant.entities, media.entity]);
 
   const isPlaying = useMemo<boolean>(() => {
@@ -32,6 +34,16 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
       ? `${homeAssistant.client?.baseUrl()}${entity.attributes.entity_picture}`
       : entity.attributes.entity_picture;
   }, [entity, homeAssistant.client]);
+
+  const volume = useMemo<number>(() => {
+    if (!entity?.attributes?.volume_level) return 0;
+    return entity.attributes.volume_level * 100;
+  }, [entity]);
+
+  const isMuted = useMemo<boolean>(() => {
+    if (!entity?.attributes?.is_volume_muted) return false;
+    return entity.attributes.is_volume_muted;
+  }, [entity]);
 
   if (!entity)
     return (
@@ -118,7 +130,43 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
           </div>
         </section>
       </div>
-      <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1"></section>
+      <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
+        <div className="flex w-full flex-row items-center gap-x-2">
+          <button
+            className="rounded-full p-2"
+            onClick={(e: MouseEvent) => {
+              e.preventDefault();
+              homeAssistant.client?.callService("media_player", "volume_mute", {
+                entity_id: media.entity,
+                is_volume_muted: !isMuted,
+              });
+            }}
+          >
+            <Icon
+              size={1}
+              title="Volume"
+              path={isMuted ? mdiVolumeMute : mdiVolumeHigh}
+            />
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              e.preventDefault();
+              homeAssistant.client?.callService("media_player", "volume_set", {
+                entity_id: media.entity,
+                volume_level: Number(e.currentTarget.value) / 100,
+              });
+            }}
+            className="h-2 w-full appearance-none rounded-full"
+            style={{
+              background: `linear-gradient(to right, rgb(var(--green-rgb)) ${volume}%, rgb(var(--background-end-rgb)) ${volume}%)`,
+            }}
+          />
+        </div>
+      </section>
     </>
   );
 }

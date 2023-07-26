@@ -7,6 +7,7 @@
   --foreground-rgb-dimmed: 40, 40, 40;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --green-rgb: 26, 184, 47;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +16,7 @@
     --foreground-rgb-dimmed: 210, 210, 210;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --green-rgb: 26, 184, 47;
   }
 }
 
@@ -51,4 +53,14 @@ button {
 
 button:hover {
   transform: scale(1.1);
+}
+
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: rgb(var(--foreground-rgb));
+  border-radius: 50%;
+  cursor: pointer;
 }
