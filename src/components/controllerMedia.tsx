@@ -1,10 +1,8 @@
 "use client";
-import { MouseEvent, MouseEventHandler, useMemo } from "react";
+import { MouseEvent, useMemo } from "react";
 import Icon from "@mdi/react";
-import Image from "next/image";
 
 import type { MediaSetting } from "@/types/settings";
-import { useSettings } from "@/providers/settings";
 import { useHomeAssistant } from "@/providers/homeAssistant";
 import {
   mdiMusicNoteOutline,
@@ -16,7 +14,6 @@ import {
 import { HassEntity } from "home-assistant-js-websocket";
 
 export default function ControllerMedia({ media }: { media: MediaSetting }) {
-  const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
   const entity = useMemo<HassEntity | undefined>(() => {
@@ -26,8 +23,15 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
 
   const isPlaying = useMemo<boolean>(() => {
     if (!entity) return false;
-    return entity.state === "playing";
+    return entity.state === "playing" || entity.state === "buffering";
   }, [entity]);
+
+  const picture = useMemo<string | undefined>(() => {
+    if (!entity?.attributes?.entity_picture) return undefined;
+    return entity.attributes.entity_picture.startsWith("/api")
+      ? `${homeAssistant.client?.baseUrl()}${entity.attributes.entity_picture}`
+      : entity.attributes.entity_picture;
+  }, [entity, homeAssistant.client]);
 
   if (!entity)
     return (
@@ -40,12 +44,12 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
     <>
       <div className="grid min-w-full grid-cols-5 gap-x-3 gap-y-1">
         <section className="col-span-2 flex items-center">
-          {entity.attributes?.entity_picture ? (
+          {picture ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               className="m-auto w-full rounded-lg"
               alt={entity.attributes?.friendly_name ?? media.entity}
-              src={entity.attributes.entity_picture}
+              src={picture}
             />
           ) : (
             <Icon
