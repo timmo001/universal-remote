@@ -28,7 +28,7 @@ export default async function RootLayout({
               id="container"
             >
               <Header />
-              <main className="mx-2 my-4 flex min-h-screen w-full max-w-xs flex-col items-baseline justify-start gap-2">
+              <main className="mx-2 my-4 flex min-h-screen w-full flex-col items-baseline justify-start gap-2">
                 {children}
               </main>
             </div>
