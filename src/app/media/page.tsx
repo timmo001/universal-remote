@@ -8,7 +8,8 @@ export default function Media() {
   const { settings } = useSettings();
 
   useEffect(() => {
-    if (!settings?.media?.entities || settings.media.entities.length < 1) return;
+    if (!settings?.media?.entities || settings.media.entities.length < 1)
+      return;
     redirect(`/media/${settings.media.entities[0].entity}`);
   }, [settings?.media?.entities]);
 
