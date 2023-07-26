@@ -1,10 +1,12 @@
 {
   "name": "Universal Remote",
   "short_name": "Universal Remote",
+  "description": "A remote control for your home",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#673AB7",
   "background_color": "#000000",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

@@ -1,3 +1,5 @@
 # Universal Remote
 
-Control your home using Home Assistant and Next.js
+A remote control for your home.
+
+Control your home using Home Assistant and Next.js.

@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Universal Remote",
-  description: "Control your home using Home Assistant and Next.js",
+  description: "A remote control for your home",
   applicationName: "Universal Remote",
   authors: {
     name: "Aidan Timson <Timmo>",
