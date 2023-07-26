@@ -1,21 +1,40 @@
 "use client";
+import { useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { mdiChevronLeft } from "@mdi/js";
 import Icon from "@mdi/react";
 
-export const pageMap: { [path: string]: string } = {
-  "/": "Home",
-  "/lights": "Lights",
+interface PageMap {
+  [path: string]: string;
+}
+
+export const pageMap: PageMap = {
+  "/tv": "TV",
   "/media": "Media",
+  "/lights": "Lights",
+  "/switches": "Switches",
   "/settings": "Settings",
   "/setup": "Setup",
-  "/switches": "Switches",
-  "/tv": "TV",
+  "/": "Home",
 };
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
+
+  const title = useMemo(() => {
+    console.log("pathname:", pathname);
+    let result: string | undefined = pageMap[pathname];
+    if (result) return result;
+
+    result = Object.entries(pageMap).find(([path, value]) =>
+      pathname.startsWith(path),
+    )?.[1];
+    if (result) return result;
+
+    return "";
+  }, [pathname]);
+
   return (
     <header className="align-center flex w-full flex-row justify-start gap-2">
       {pathname !== "/" && (
@@ -28,7 +47,7 @@ export default function Header() {
           <Icon title="Switches" size={1} path={mdiChevronLeft} />
         </button>
       )}
-      <h2 className="text-2xl font-bold">{pageMap[pathname]}</h2>
+      <h2 className="text-2xl font-bold">{title}</h2>
     </header>
   );
 }
