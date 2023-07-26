@@ -16,5 +16,32 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "TV",
+      "short_name": "TV",
+      "url": "/tv"
+    },
+    {
+      "name": "Media",
+      "short_name": "Media",
+      "url": "/media"
+    },
+    {
+      "name": "Lights",
+      "short_name": "Lights",
+      "url": "/lights"
+    },
+    {
+      "name": "Switches",
+      "short_name": "Switches",
+      "url": "/switches"
+    },
+    {
+      "name": "Settings",
+      "short_name": "Settings",
+      "url": "/settings"
+    }
   ]
 }
