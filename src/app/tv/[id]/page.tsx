@@ -81,13 +81,6 @@ export default function TV({ params }: { params: { id: string } }) {
     settings?.tv?.entities,
   ]);
 
-  if (!tv)
-    return (
-      <>
-        <h2 className="mb-2 text-2xl font-bold">Loading data..</h2>
-      </>
-    );
-
   if (!settings?.tv?.entities || settings.tv.entities.length < 1)
     return (
       <>
@@ -95,6 +88,13 @@ export default function TV({ params }: { params: { id: string } }) {
         <p>
           Please add an entity in <a href="/settings">settings</a>.
         </p>
+      </>
+    );
+
+  if (!tv)
+    return (
+      <>
+        <h2 className="mb-2 text-2xl font-bold">Loading data..</h2>
       </>
     );
 

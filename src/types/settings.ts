@@ -16,15 +16,15 @@ export interface TvSettings {
 }
 
 export interface MediaSettings {
-  entities: Array<EntitySetting>;
+  entities: Array<MediaSetting>;
 }
 
 export interface LightSettings {
-  entities: Array<EntitySetting>;
+  entities: Array<LightSetting>;
 }
 
 export interface SwitchSettings {
-  entities: Array<EntitySetting>;
+  entities: Array<SwitchSetting>;
 }
 
 export interface EntitySetting {
@@ -40,3 +40,9 @@ export interface TVSetting extends EntitySetting {
   type: TVType;
   macAddress?: string;
 }
+
+export interface MediaSetting extends EntitySetting {}
+
+export interface LightSetting extends EntitySetting {}
+
+export interface SwitchSetting extends EntitySetting {}
