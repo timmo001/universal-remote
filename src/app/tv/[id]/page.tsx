@@ -101,11 +101,13 @@ export default function TV({ params }: { params: { id: string } }) {
   return (
     <>
       <List items={tvSources} />
-      {tv.type === TVType.LGWebOS ? (
-        <RemoteLGWebOS tv={tv} />
-      ) : tv.type === TVType.LGHorizon ? (
-        <RemoteLGHorizon tv={tv} />
-      ) : null}
+      <div className="flex w-fit flex-col self-center">
+        {tv.type === TVType.LGWebOS ? (
+          <RemoteLGWebOS tv={tv} />
+        ) : tv.type === TVType.LGHorizon ? (
+          <RemoteLGHorizon tv={tv} />
+        ) : null}
+      </div>
       <h2 className="mb-2 text-2xl font-bold">Sources</h2>
       <List items={sources} />
     </>

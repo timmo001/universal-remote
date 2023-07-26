@@ -113,14 +113,14 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
 
   return (
     <>
-      <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-1 gap-x-1 gap-y-1">
         <Button
           name="POWER"
           icon={<Icon title="POWER" size={1.2} path={mdiPower} color="red" />}
           onClick={handlePowerClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-3 gap-x-8 gap-y-1">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
           <Button
             key={number}
@@ -145,7 +145,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-3 gap-x-8 gap-y-1">
         <Button
           name="VOLUMEUP"
           icon={<Icon title="VOLUMEUP" size={1.2} path={mdiPlus} />}
@@ -173,7 +173,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
+      <section className="grid grid-cols-3 gap-x-8 gap-y-4">
         <Button
           name="HOME"
           icon={<Icon title="HOME" size={1.2} path={mdiHomeOutline} />}
@@ -220,7 +220,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-4 justify-between gap-x-1 gap-y-1">
+      <section className="grid grid-cols-4 justify-between gap-x-8 gap-y-1">
         <Button
           name="media.controls/rewind"
           icon={<Icon title="REWIND" size={1.2} path={mdiRewind} />}
@@ -242,7 +242,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleCommandClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-2 justify-between gap-x-1 gap-y-1">
+      <section className="grid grid-cols-2 justify-between gap-x-8 gap-y-1">
         <Button
           name="media.controls/stop"
           icon={<Icon title="STOP" size={1.2} path={mdiStop} />}
@@ -254,7 +254,7 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleCommandClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-4 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-4 gap-x-8 gap-y-1">
         <Button
           name="RED"
           icon={<span className="h-4 w-8 rounded-full bg-red-600" />}

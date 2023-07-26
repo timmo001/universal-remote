@@ -86,7 +86,7 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
 
   return (
     <>
-      <section className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-1 gap-x-1 gap-y-1">
         <Button
           name="POWER"
           icon={<Icon title="POWER" size={1.2} path={mdiPower} color="red" />}
@@ -98,7 +98,7 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
+      <section className="grid grid-cols-3 gap-x-12 gap-y-4">
         <Button
           name="Guide"
           icon={<Icon title="Guide" size={1.2} path={mdiTelevisionGuide} />}
@@ -145,7 +145,7 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-2 gap-y-4">
+      <section className="grid grid-cols-3 gap-x-12 gap-y-4">
         <div />
         <div />
         <Button
@@ -165,7 +165,7 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 justify-between gap-x-1 gap-y-1">
+      <section className="grid grid-cols-3 justify-between gap-x-12 gap-y-1">
         <Button
           name="MediaRewind"
           icon={<Icon title="MediaRewind" size={1.2} path={mdiRewind} />}
@@ -184,7 +184,7 @@ export default function RemoteLGHorizon({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
-      <section className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-3 gap-x-12 gap-y-1">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
           <Button
             key={number}
