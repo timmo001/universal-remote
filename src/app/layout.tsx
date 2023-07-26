@@ -11,6 +11,27 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Universal Remote",
   description: "Control your home using Home Assistant and Next.js",
+  applicationName: "Universal Remote",
+  authors: {
+    name: "Aidan Timson <Timmo>",
+    url: "https://github.com/timmo001/universal-remote",
+  },
+  keywords: [
+    "Control",
+    "Home Assistant",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Universal Remote",
+  ],
+  themeColor: {
+    color: "#000000",
+  },
+  colorScheme: "dark",
+  creator: "Aidan Timson <Timmo>",
+  publisher: "Aidan Timson <Timmo>",
+  manifest: "/manifest.json",
+  category: "Home Automation",
 };
 
 export default async function RootLayout({
