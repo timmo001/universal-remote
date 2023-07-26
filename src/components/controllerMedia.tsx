@@ -60,61 +60,61 @@ export default function ControllerMedia({ media }: { media: MediaSetting }) {
           )}
         </section>
 
-        <section className="col-span-3">
-          <div className="grid min-w-full grid-cols-1 gap-x-1 gap-y-1">
-            <h3 className="pt-1 text-lg font-bold">
-              {entity.attributes?.media_title}
-            </h3>
-            <h4 className="text-sm font-bold">
-              {entity.attributes?.media_artist}
-            </h4>
-            <h5 className="text-xs">{entity.attributes?.media_album_name}</h5>
-            <div className="flex-grow" />
-            <div className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
-              <button
-                className="rounded-full p-2"
-                onClick={(e: MouseEvent) => {
-                  e.preventDefault();
-                  homeAssistant.client?.callService(
-                    "media_player",
-                    "media_previous_track",
-                    { entity_id: media.entity },
-                  );
-                }}
-              >
-                <Icon size={1} title="Previous" path={mdiSkipPrevious} />
-              </button>
-              <button
-                className="rounded-full p-2"
-                onClick={(e: MouseEvent) => {
-                  e.preventDefault();
-                  homeAssistant.client?.callService(
-                    "media_player",
-                    isPlaying ? "media_pause" : "media_play",
-                    { entity_id: media.entity },
-                  );
-                }}
-              >
-                <Icon
-                  size={1}
-                  title={isPlaying ? "Pause" : "Pause"}
-                  path={isPlaying ? mdiPause : mdiPlay}
-                />
-              </button>
-              <button
-                className="rounded-full p-2"
-                onClick={(e: MouseEvent) => {
-                  e.preventDefault();
-                  homeAssistant.client?.callService(
-                    "media_player",
-                    "media_next_track",
-                    { entity_id: media.entity },
-                  );
-                }}
-              >
-                <Icon size={1} title="Next" path={mdiSkipNext} />
-              </button>
-            </div>
+        <section className="col-span-3 flex min-w-full flex-col gap-1">
+          <h3 className="pt-1 text-2xl font-bold">
+            {entity.attributes?.media_title}
+          </h3>
+          <h4 className="text-md font-medium">
+            {entity.attributes?.media_artist}
+          </h4>
+          <h5 className="text-xs font-medium">
+            {entity.attributes?.media_album_name}
+          </h5>
+          <div className="flex-1" />
+          <div className="grid min-w-full grid-cols-3 gap-x-1 gap-y-1">
+            <button
+              className="rounded-full p-2"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault();
+                homeAssistant.client?.callService(
+                  "media_player",
+                  "media_previous_track",
+                  { entity_id: media.entity },
+                );
+              }}
+            >
+              <Icon size={1} title="Previous" path={mdiSkipPrevious} />
+            </button>
+            <button
+              className="rounded-full p-2"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault();
+                homeAssistant.client?.callService(
+                  "media_player",
+                  isPlaying ? "media_pause" : "media_play",
+                  { entity_id: media.entity },
+                );
+              }}
+            >
+              <Icon
+                size={1}
+                title={isPlaying ? "Pause" : "Pause"}
+                path={isPlaying ? mdiPause : mdiPlay}
+              />
+            </button>
+            <button
+              className="rounded-full p-2"
+              onClick={(e: MouseEvent) => {
+                e.preventDefault();
+                homeAssistant.client?.callService(
+                  "media_player",
+                  "media_next_track",
+                  { entity_id: media.entity },
+                );
+              }}
+            >
+              <Icon size={1} title="Next" path={mdiSkipNext} />
+            </button>
           </div>
         </section>
       </div>
