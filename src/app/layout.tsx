@@ -25,11 +25,24 @@ export const metadata: Metadata = {
     "Universal Remote",
   ],
   themeColor: {
-    color: "#000000",
+    color: "#673AB7",
+    media: "(prefers-color-scheme: dark)",
   },
   colorScheme: "dark",
   creator: "Aidan Timson <Timmo>",
   publisher: "Aidan Timson <Timmo>",
+  icons: [
+    {
+      sizes: "192x192",
+      type: "image/png",
+      url: "/android-chrome-192x192.png",
+    },
+    {
+      sizes: "512x512",
+      type: "image/png",
+      url: "/android-chrome-512x512.png",
+    },
+  ],
   manifest: "/manifest.json",
   category: "Home Automation",
 };

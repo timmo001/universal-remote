@@ -23,7 +23,6 @@ export default function Header() {
   const pathname = usePathname();
 
   const title = useMemo<string>(() => {
-    console.log("pathname:", pathname);
     let result: string | undefined = pageMap[pathname];
     if (result) return result;
 
