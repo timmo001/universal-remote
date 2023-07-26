@@ -15,7 +15,7 @@ export default function TV({ params }: { params: { id: string } }) {
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
-  const [tv, setTv] = useState<TVSetting>();
+  const [tv, setTV] = useState<TVSetting>();
 
   useEffect(() => {
     if (
@@ -24,7 +24,7 @@ export default function TV({ params }: { params: { id: string } }) {
       settings.tv.entities.length < 1
     )
       return;
-    setTv(settings.tv.entities.find((value) => value.entity === params.id));
+    setTV(settings.tv.entities.find((value) => value.entity === params.id));
   }, [params.id, settings?.tv?.entities]);
 
   const tvSources = useMemo<Array<ListItem>>(() => {
