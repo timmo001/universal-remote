@@ -1,5 +1,5 @@
 "use client";
-import { MouseEvent, MouseEventHandler } from "react";
+import { MouseEvent, MouseEventHandler, useState } from "react";
 import Icon from "@mdi/react";
 
 import type { TVSetting } from "@/types/settings";
@@ -16,6 +16,7 @@ import {
   mdiInformationOutline,
   mdiMenu,
   mdiMinus,
+  mdiNumeric,
   mdiPause,
   mdiPlay,
   mdiPlus,
@@ -43,6 +44,7 @@ function Button({
 }
 
 export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
+  const [showNumpad, setShowNumpad] = useState<boolean>(false);
   const { settings } = useSettings();
   const homeAssistant = useHomeAssistant();
 
@@ -108,43 +110,56 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
     }
   }
 
+  function handleToggleNumpad(event: MouseEvent<HTMLButtonElement>): void {
+    console.log("Toggle numpad:", event.currentTarget.name);
+    setShowNumpad(!showNumpad);
+  }
+
   if (!settings || !settings.tv || !settings.tv.entities)
     return <h2 className="mb-2 text-2xl font-bold">No TV defined</h2>;
 
   return (
     <>
-      <section className="grid grid-cols-1 gap-x-1 gap-y-1">
+      <section className="grid grid-cols-3 gap-x-1 gap-y-1">
+        <div />
         <Button
           name="POWER"
           icon={<Icon title="POWER" size={1.2} path={mdiPower} color="red" />}
           onClick={handlePowerClick}
         />
+        <Button
+          name="NUMPAD"
+          icon={<Icon title="NUMPAD" size={1.2} path={mdiNumeric} />}
+          onClick={handleToggleNumpad}
+        />
       </section>
-      <section className="grid grid-cols-3 gap-x-8 gap-y-1">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+      {showNumpad && (
+        <section className="grid grid-cols-3 gap-x-8 gap-y-1">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+            <Button
+              key={number}
+              name={number.toString()}
+              icon={<span className="text-2xl">{number}</span>}
+              onClick={handleButtonClick}
+            />
+          ))}
           <Button
-            key={number}
-            name={number.toString()}
-            icon={<span className="text-2xl">{number}</span>}
+            name="INFO"
+            icon={<Icon title="INFO" size={1.2} path={mdiInformationOutline} />}
             onClick={handleButtonClick}
           />
-        ))}
-        <Button
-          name="INFO"
-          icon={<Icon title="INFO" size={1.2} path={mdiInformationOutline} />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="0"
-          icon={<span className="text-2xl">0</span>}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="GUIDE"
-          icon={<Icon title="GUIDE" size={1.2} path={mdiTelevisionGuide} />}
-          onClick={handleButtonClick}
-        />
-      </section>
+          <Button
+            name="0"
+            icon={<span className="text-2xl">0</span>}
+            onClick={handleButtonClick}
+          />
+          <Button
+            name="GUIDE"
+            icon={<Icon title="GUIDE" size={1.2} path={mdiTelevisionGuide} />}
+            onClick={handleButtonClick}
+          />
+        </section>
+      )}
       <section className="grid grid-cols-3 gap-x-8 gap-y-1">
         <Button
           name="VOLUMEUP"
@@ -220,6 +235,28 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           onClick={handleButtonClick}
         />
       </section>
+      <section className="grid grid-cols-4 gap-x-8 gap-y-1">
+        <Button
+          name="RED"
+          icon={<span className="h-4 w-8 rounded-full bg-red-600" />}
+          onClick={handleButtonClick}
+        />
+        <Button
+          name="GREEN"
+          icon={<span className="h-4 w-8 rounded-full bg-green-600" />}
+          onClick={handleButtonClick}
+        />
+        <Button
+          name="YELLOW"
+          icon={<span className="h-4 w-8 rounded-full bg-yellow-600" />}
+          onClick={handleButtonClick}
+        />
+        <Button
+          name="BLUE"
+          icon={<span className="h-4 w-8 rounded-full bg-blue-600" />}
+          onClick={handleButtonClick}
+        />
+      </section>
       <section className="grid grid-cols-4 justify-between gap-x-8 gap-y-1">
         <Button
           name="media.controls/rewind"
@@ -252,28 +289,6 @@ export default function RemoteLGWebOS({ tv }: { tv: TVSetting }) {
           name="media.controls/Record"
           icon={<span className="h-5 w-5 rounded-full bg-red-600" />}
           onClick={handleCommandClick}
-        />
-      </section>
-      <section className="grid grid-cols-4 gap-x-8 gap-y-1">
-        <Button
-          name="RED"
-          icon={<span className="h-4 w-8 rounded-full bg-red-600" />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="GREEN"
-          icon={<span className="h-4 w-8 rounded-full bg-green-600" />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="YELLOW"
-          icon={<span className="h-4 w-8 rounded-full bg-yellow-600" />}
-          onClick={handleButtonClick}
-        />
-        <Button
-          name="BLUE"
-          icon={<span className="h-4 w-8 rounded-full bg-blue-600" />}
-          onClick={handleButtonClick}
         />
       </section>
     </>
