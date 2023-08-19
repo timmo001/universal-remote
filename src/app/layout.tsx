@@ -5,7 +5,6 @@ import "@/app/globals.css";
 import { HomeAssistantProvider } from "@/providers/homeAssistant";
 import { SettingsProvider } from "@/providers/settings";
 import Header from "@/components/header";
-import Layout from "@/components/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -58,17 +57,15 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SettingsProvider>
           <HomeAssistantProvider>
-            <Layout>
-              <div
-                className="mx-auto flex min-h-screen max-w-md flex-col items-baseline justify-start gap-1 px-4 py-4"
-                id="container"
-              >
-                <Header />
-                <main className="mx-2 my-4 flex min-h-screen w-full flex-col items-baseline justify-start gap-2">
-                  {children}
-                </main>
-              </div>
-            </Layout>
+            <div
+              className="mx-auto flex min-h-screen max-w-md flex-col items-baseline justify-start gap-1 px-4 py-4"
+              id="container"
+            >
+              <Header />
+              <main className="mx-2 my-4 flex min-h-screen w-full flex-col items-baseline justify-start gap-2">
+                {children}
+              </main>
+            </div>
           </HomeAssistantProvider>
         </SettingsProvider>
       </body>
