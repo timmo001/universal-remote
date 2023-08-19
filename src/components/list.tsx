@@ -1,39 +1,9 @@
 "use client";
-import { useMemo } from "react";
 import Link from "next/link";
 
 import { type ListItem, ListItemType } from "@/types/list";
-import { useHomeAssistant } from "@/providers/homeAssistant";
 
-export default function List({ items: itemsIn }: { items: Array<ListItem> }) {
-  const homeAssistant = useHomeAssistant();
-
-  const items = useMemo<Array<ListItem>>(() => {
-    const entities = homeAssistant.entities;
-    if (!entities)
-      return itemsIn.map(
-        (item: ListItem): ListItem => ({ ...item, iconColor: "text-gray-400" }),
-      );
-
-    return itemsIn.map((item: ListItem): ListItem => {
-      if (
-        item.type !== ListItemType.Entity ||
-        !homeAssistant.client ||
-        !homeAssistant.entities
-      )
-        return item;
-
-      const entity = homeAssistant.entities[item.key];
-
-      return {
-        ...item,
-        iconColor: entity
-          ? homeAssistant.client.getIconColor(entity)
-          : "text-gray-400",
-      };
-    });
-  }, [homeAssistant.client, homeAssistant.entities, itemsIn]);
-
+export default function List({ items }: { items: Array<ListItem> }) {
   return (
     <section className="flex min-w-full flex-col items-center justify-center">
       <ul className="selectable-list flex min-w-full flex-col gap-3 px-2">

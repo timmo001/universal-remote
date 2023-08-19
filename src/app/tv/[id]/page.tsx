@@ -66,6 +66,7 @@ export default function TV({ params }: { params: { id: string } }) {
         type: ListItemType.Source,
         name: source,
         icon: <Icon title={source} size={1} path={mdiTelevision} />,
+        selected: source === entities[tv.entity].attributes.source,
         onClick: () => {
           homeAssistant.client?.callService("media_player", "select_source", {
             entity_id: tv.entity,
