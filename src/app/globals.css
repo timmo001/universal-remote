@@ -64,3 +64,8 @@ button:hover {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.effect-1,
+.effect-2 {
+  overflow: hidden;
+}
