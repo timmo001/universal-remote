@@ -1507,10 +1507,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdi/js@npm:7.2.96":
-  version: 7.2.96
-  resolution: "@mdi/js@npm:7.2.96"
-  checksum: f8e22da5d994a4b764580d22290c825c1d789a6e015c166e271e2164fb80d33551d6632632897e30ae9033a3fe4aa6a28f2e97c5d3ad56c823f89f859944899e
+"@mdi/js@npm:7.3.67":
+  version: 7.3.67
+  resolution: "@mdi/js@npm:7.3.67"
+  checksum: bba88d6f1305a02c3b7372930746314aec1ddc31f04372c4da419a345661de3be34181a749afa00b1c0cd8281d9f443efe1876ee9ba683032e88f35466886900
   languageName: node
   linkType: hard
 
@@ -7085,7 +7085,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "universal-remote@workspace:."
   dependencies:
-    "@mdi/js": 7.2.96
+    "@mdi/js": 7.3.67
     "@mdi/react": 1.6.1
     "@tailwindcss/aspect-ratio": 0.4.2
     "@tailwindcss/forms": 0.5.6
