@@ -1926,12 +1926,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-modal@npm:3.16.2":
-  version: 3.16.2
-  resolution: "@types/react-modal@npm:3.16.2"
+"@types/react-modal@npm:3.16.3":
+  version: 3.16.3
+  resolution: "@types/react-modal@npm:3.16.3"
   dependencies:
     "@types/react": "*"
-  checksum: b54956485dd1da9ccd3667d59f5164669d5d621f7087758a2fd02f5b4bcac0f286734b66302bf38d86479f70c7d1591762ff15323b1687c605ea2825e356be08
+  checksum: 53c92dfbe46aae6f4ca4d96a166fd69a4b8dc539c5e8f755086dd1471656924ca6dd0a179be746c634686a0073aef67bb9615ee8600d9536cc1521b738e48453
   languageName: node
   linkType: hard
 
@@ -7180,7 +7180,7 @@ __metadata:
     "@types/node": 20.8.10
     "@types/react": 18.2.36
     "@types/react-dom": 18.2.14
-    "@types/react-modal": 3.16.2
+    "@types/react-modal": 3.16.3
     autoprefixer: 10.4.16
     eslint: 8.53.0
     eslint-config-next: 14.0.1
