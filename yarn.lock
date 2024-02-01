@@ -1901,12 +1901,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.11.13":
-  version: 20.11.13
-  resolution: "@types/node@npm:20.11.13"
+"@types/node@npm:20.11.15":
+  version: 20.11.15
+  resolution: "@types/node@npm:20.11.15"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 76fbe4dbcce9ecb602c1e0528124bb113e9ece58d417e96710b7ba96dd67cd0bb050272218dc796be36c0d8c29d7c55da44311be429daa4253c3a00f1b3840ff
+  checksum: 80fe17561636e6e72a0264c26232ea4c46b5ee700888a703f06ae6c9115a2dadb16ccd09b79aa2c66a07cb547a201b2609ab939b9bde42bdad56eeefd161bc12
   languageName: node
   linkType: hard
 
@@ -7209,7 +7209,7 @@ __metadata:
     "@tailwindcss/aspect-ratio": 0.4.2
     "@tailwindcss/forms": 0.5.7
     "@tailwindcss/typography": 0.5.10
-    "@types/node": 20.11.13
+    "@types/node": 20.11.15
     "@types/react": 18.2.51
     "@types/react-dom": 18.2.18
     "@types/react-modal": 3.16.3
