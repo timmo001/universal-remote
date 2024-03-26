@@ -4148,10 +4148,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"home-assistant-js-websocket@npm:9.1.0":
-  version: 9.1.0
-  resolution: "home-assistant-js-websocket@npm:9.1.0"
-  checksum: 4692b856b1e89c05ec772e7e3590d6b0cd0f6ef711eac9fa888d62c21fe4f9c669ab7ae8b7b5c52af58e4821c7cecb4167ec8a617426bff17b8095fd44a9c8e4
+"home-assistant-js-websocket@npm:9.2.1":
+  version: 9.2.1
+  resolution: "home-assistant-js-websocket@npm:9.2.1"
+  checksum: aa58a7f21af0b0db2e71014d941d758dbbe388c11409f91fe894ab15d69abbf9075933890d097c60f399962348f31b3942c6cefc2ac0d5f9ca94cdbc6e7ffdb5
   languageName: node
   linkType: hard
 
@@ -7240,7 +7240,7 @@ __metadata:
     autoprefixer: 10.4.19
     eslint: 8.57.0
     eslint-config-next: 14.1.4
-    home-assistant-js-websocket: 9.1.0
+    home-assistant-js-websocket: 9.2.1
     next: 14.1.4
     next-pwa: 5.6.0
     postcss: 8.4.38
