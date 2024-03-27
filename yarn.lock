@@ -1835,9 +1835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/typography@npm:0.5.11":
-  version: 0.5.11
-  resolution: "@tailwindcss/typography@npm:0.5.11"
+"@tailwindcss/typography@npm:0.5.12":
+  version: 0.5.12
+  resolution: "@tailwindcss/typography@npm:0.5.12"
   dependencies:
     lodash.castarray: ^4.4.0
     lodash.isplainobject: ^4.0.6
@@ -1845,7 +1845,7 @@ __metadata:
     postcss-selector-parser: 6.0.10
   peerDependencies:
     tailwindcss: "*"
-  checksum: 5855e616d783add4ba10913d4f75a7c4beb219bf41525d9671bef5919d766704520168194dfc221ec2f6d11fb34413cf4cafcd1b25e68f092e6dd9f683f4b721
+  checksum: b2037e73d83ad5bd8ca00b22314feb6c72706bf1ae5be087c41805923f06e90bc95c7410f071a36f1d72f9cff850a369e16321f12f7d6e85d78f9fedd8e480ac
   languageName: node
   linkType: hard
 
@@ -7231,7 +7231,7 @@ __metadata:
     "@mdi/react": 1.6.1
     "@tailwindcss/aspect-ratio": 0.4.2
     "@tailwindcss/forms": 0.5.7
-    "@tailwindcss/typography": 0.5.11
+    "@tailwindcss/typography": 0.5.12
     "@types/node": 20.11.30
     "@types/react": 18.2.73
     "@types/react-dom": 18.2.22
