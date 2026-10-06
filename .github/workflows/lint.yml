@@ -28,4 +28,4 @@ jobs:
   lint-prettier:
     uses: timmo001/workflows/.github/workflows/lint-prettier.yml@0f94251168336b74fadf271a955d24d1de4de343 # 20260927.1
   lint-yamllint:
-    uses: timmo001/workflows/.github/workflows/lint-yamllint.yml@0f94251168336b74fadf271a955d24d1de4de343 # 20260927.1
+    uses: timmo001/workflows/.github/workflows/lint-yamllint.yml@f72d1eb6c310502499f5551d65ceca1e478eb266 # 20261003.0
